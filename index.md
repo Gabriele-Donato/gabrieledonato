@@ -15,5 +15,3 @@ image: /assets/images/experiment_on_bird_1768.jpg
   {% endfor %}
 </div>
 
-<!-- Display the image -->
-<img src="{{ site.baseurl }}/assets/images/experiment_on_bird_1768.jpg" alt="Experiment on Bird">

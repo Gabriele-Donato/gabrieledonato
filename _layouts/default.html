@@ -3,21 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>{{ site.title }}</title>
+  <title>{{ page.title }} - {{ site.title }}</title>
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
 </head>
 <body>
-  <header class="page-header" style="background-image: url({{ page.image | default: '/assets/images/experiment_on_bird_1768.jpg' }});">
+  <header class="page-header" style="background-image: url({{ page.image | prepend: site.baseurl }});">
     <div class="header-content">
       <div class="site-title">
-        <h3><a href="{{ '/' | relative_url}}" style="color:white;text-decoration:none;">{{ site.title }}</a></h3>
+        <h3><a href="{{ '/' | relative_url }}" style="color:white;text-decoration:none;">{{ site.title }}</a></h3>
       </div>
       <nav>
         <ul>
-          <!-- <li><a href="{{ '/' | relative_url }}">Home</a></li> -->
           <li><a href="{{ '/about/' | relative_url }}" style="text-decoration:none">About</a></li>
-          <!-- <li><a href="{{ '/publications/' | relative_url }}">Publications</a></li>
-          <li><a href="{{ '/projects/' | relative_url }}">Projects</a></li> -->
         </ul>
       </nav>
     </div>
