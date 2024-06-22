@@ -2,6 +2,7 @@
 layout: default
 title: About
 permalink: /about/
+image: /assets/images/alchemist.png
 ---
 
 {{ site.description }}
