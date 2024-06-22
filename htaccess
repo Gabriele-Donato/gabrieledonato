@@ -1,0 +1,11 @@
+---
+layout: null
+permalink: .htaccess
+---
+
+{% if site.baseurl == "protected" %}
+    AuthType Basic
+    AuthName "Protected Posts"
+    AuthUserFile "{{ site.source }}/.htpasswd"
+    Require valid-user
+{% endif %}
