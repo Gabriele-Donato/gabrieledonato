@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Home
-image: /assets/images/experiment_on_bird_1768.jpg
+image: /assets/images/rambosson.jpg
 ---
 
 <h1>Posts</h1>
