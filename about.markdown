@@ -9,6 +9,7 @@ image: /assets/images/rambosson.jpg
 
 Favourite quote of the moment:
 >*"concepts without intuitions are empty, intuitions without concepts are blind"*
+> 
 >-Immanuel Kant
 
 The image is from *Les Astres* by Jean Rambosson, a book found in Pêle-Mêle, a famous second-hand bookstore in Bruxelles.
