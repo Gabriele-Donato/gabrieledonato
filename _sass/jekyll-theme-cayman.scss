@@ -110,7 +110,7 @@ a {
   color: $header-heading-color;
   background-size: cover;
   background-position: center;
-  height: 50vh;
+  height: 60vh;
   display: flex;
   align-items: flex-start; // Align items to the start
   justify-content: space-between; // Space between title and nav
@@ -121,6 +121,7 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between; // Spread out title and nav
+    padding-top: 1.5em;
     position: relative;
     z-index: 2;
   }
