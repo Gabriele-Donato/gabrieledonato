@@ -112,18 +112,17 @@ a {
   background-position: center;
   height: 100vh;
   display: flex;
-  align-items: center;
-  justify-content: space-between; // Change from center to space-between
-  padding: 0 2rem;
+  align-items: flex-start; // Align items to the start
+  justify-content: space-between; // Space between title and nav
+  padding: 1rem 2rem; // Adjust padding as needed
 
   .header-content {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between; // Ensure content is spread out
+    justify-content: space-between; // Spread out title and nav
     position: relative;
     z-index: 2;
-    padding-top: 0.5rem;
   }
 
   &::before {
@@ -141,7 +140,7 @@ a {
 .site-title {
   h3 {
     margin: 0;
-    font-size: 2.5rem;
+    font-size: 2rem; // Adjust size as needed
     color: white;
   }
 }
