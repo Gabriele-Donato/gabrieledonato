@@ -29,7 +29,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 1rem; /* Relative font size */
+  font-size: 2.5rem; /* Relative font size */
   line-height: 1.5;
   color: $body-text-color;
 }
@@ -152,44 +152,15 @@ a {
   color: white; /* Ensure the project name is visible */
 }
 
-nav {
-  position: relative;
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 1rem;
 
   @include small {
-    width: 100%;
-    text-align: center;
-  }
-
-  ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    gap: 1rem;
-
-    @include small {
-      display: none; /* Hide the nav items initially */
-      flex-direction: column;
-      gap: 0.5rem;
-      background-color: $body-bg-color;
-      padding: 1rem;
-      position: absolute;
-      top: 3rem; /* Adjust this value based on header height */
-      width: 100%;
-      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    }
-  }
-
-  .dropdown-btn {
-    display: none;
-
-    @include small {
-      display: block; /* Show the dropdown button on small screens */
-      background: none;
-      border: none;
-      color: white;
-      font-size: 1.5rem;
-      cursor: pointer;
-    }
+    flex-direction: column;
+    gap: 0.5rem;
   }
 }
 
