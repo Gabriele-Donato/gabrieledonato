@@ -111,16 +111,16 @@ a {
   text-align: center;
   background-size: cover;
   background-position: center;
-  height: 100vh; 
+  height: 100vh;
   display: flex;
-  align-items: center; 
-  justify-content: center; 
-  padding: 0 2rem; 
+  align-items: center;
+  justify-content: center;
+  padding: 0 2rem;
 
   .header-content {
     width: 100%;
     display: flex;
-    flex-direction: column; 
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     position: relative;
@@ -135,22 +135,22 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); 
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 1;
   }
 }
 
-.site-title h1 {
+.site-title h3 {
   margin: 0;
-  font-size: 1.5rem;
-  color: white; 
+  font-size: 2.5rem;
+  color: white;
 }
 
 nav ul {
   list-style: none;
   padding: 0;
   display: flex;
-  gap: 1rem;
+  gap: 2rem;
 }
 
 nav ul li {
@@ -209,12 +209,7 @@ nav ul li a {
     max-width: 100%;
   }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
+  h1, h2, h3, h4, h5, h6 {
     margin-top: 2rem;
     margin-bottom: 1rem;
     font-weight: normal;
@@ -241,34 +236,129 @@ nav ul li a {
     font: 1rem Consolas, "Liberation Mono", Menlo, Courier, monospace;
     color: $code-text-color;
     word-wrap: normal;
-    background-color: $code-bg-color;
-    border: solid 1px $border-color;
+    background-color: $code-bg_color;
+    border: solid 1px $border_color;
     border-radius: 0.3rem;
-
-    > code {
-      padding: 0;
-      margin: 0;
-      font-size: 0.9rem;
-      color: $code-text-color;
-      word-break: normal;
-      white-space: pre;
-      background: transparent;
-      border: 0;
-    }
   }
-
+  
   .highlight {
     margin-bottom: 1rem;
-
     pre {
       margin-bottom: 0;
       word-break: normal;
     }
   }
 
-  .highlight pre,
-  pre {
+  .highlight pre, pre {
     padding: 0.8rem;
     overflow: auto;
     font-size: 0.9rem;
-    line-height: 1.
+    line-height: 1.45;
+    border-radius: 0.3rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  pre code, pre tt {
+    display: inline;
+    max-width: initial;
+    padding: 0;
+    margin: 0;
+    overflow: initial;
+    line-height: inherit;
+    word-wrap: normal;
+    background-color: transparent;
+    border: 0;
+
+    &:before, &:after {
+      content: normal;
+    }
+  }
+
+  ul, ol {
+    margin-top: 0;
+  }
+
+  blockquote {
+    padding: 0 1rem;
+    margin-left: 0;
+    color: $blockquote-text-color;
+    border-left: 0.3rem solid $border-color;
+
+    > :first-child {
+      margin-top: 0;
+    }
+
+    > :last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  table {
+    display: block;
+    width: 100%;
+    overflow: auto;
+    word-break: normal;
+    word-break: keep-all;
+    -webkit-overflow-scrolling: touch;
+
+    th {
+      font-weight: bold;
+    }
+
+    th, td {
+      padding: 0.5rem 1rem;
+      border: 1px solid $table-border-color;
+    }
+  }
+
+  dl {
+    padding: 0;
+
+    dt {
+      padding: 0;
+      margin-top: 1rem;
+      font-size: 1rem;
+      font-weight: bold;
+    }
+
+    dd {
+      padding: 0;
+      margin-bottom: 1rem;
+    }
+  }
+
+  hr {
+    height: 2px;
+    padding: 0;
+    margin: 1rem 0;
+    background-color: $hr-border-color;
+    border: 0;
+  }
+}
+
+.site-footer {
+  padding-top: 2rem;
+  margin-top: 2rem;
+  border-top: solid 1px $hr-border_color;
+
+  @include large {
+    font-size: 1rem;
+  }
+
+  @include medium {
+    font-size: 1rem;
+  }
+
+  @include small {
+    font-size: 0.9rem;
+  }
+}
+
+.site-footer-owner {
+  display:block;
+  font-weight: bold;
+}
+
+.site-footer-credits {
+  color: $blockquote-text-color;
+}
