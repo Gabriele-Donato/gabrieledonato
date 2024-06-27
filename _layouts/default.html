@@ -10,11 +10,13 @@
   <header class="page-header" style="background-image: url({{ page.image | prepend: site.baseurl }});">
     <div class="header-content">
       <div class="site-title">
-        <h3><a href="{{ '/' | relative_url }}" style="color:white;text-decoration:none;">{{ site.title }}</a></h3>
+        <h1><a href="{{ '/' | relative_url }}" style="color:white;text-decoration:none;">{{ site.title }}</a></h1>
       </div>
       <nav>
+        <button class="dropdown-btn">&#9776;</button>
         <ul>
-          <li><a href="{{ '/about/' | relative_url }}" style="text-decoration:none">About</a></li>
+          <li><a href="{{ '/about/' | relative_url }}">About</a></li>
+          <!-- Add more menu items here -->
         </ul>
       </nav>
     </div>
@@ -33,7 +35,18 @@
   </main>
   
   <footer class="site-footer">
-    <p>Contact me at: <a href= "mailto: gabriele.donato52@gmail.com"> gabriele.donato52@gmail.com </a></p>
+    <p>Contact me at: <a href="mailto:gabriele.donato52@gmail.com">gabriele.donato52@gmail.com</a></p>
   </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const dropdownBtn = document.querySelector(".dropdown-btn");
+      const navMenu = document.querySelector("nav ul");
+
+      dropdownBtn.addEventListener("click", function() {
+        navMenu.classList.toggle("show");
+      });
+    });
+  </script>
 </body>
 </html>
