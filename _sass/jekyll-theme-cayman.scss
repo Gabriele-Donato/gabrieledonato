@@ -28,8 +28,8 @@
 body {
   padding: 0;
   margin: 0;
-  font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 2.5rem; /* Relative font size */
+  font-family: "Cambria Math", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 1rem; /* Relative font size */
   line-height: 1.5;
   color: $body-text-color;
 }
@@ -230,10 +230,15 @@ nav ul li a {
     margin-bottom: 1rem;
     font-weight: normal;
     color: $section-headings-color;
+    font-family: "Cambria Math", sans-serif; /* Adjust the font family */
   }
 
   p {
     margin-bottom: 1em;
+    font-family: "Cambria Math", sans-serif; /* Adjust the font family */
+    font-size: 1.1rem; /* Adjust the font size */
+    line-height: 1.8; /* Adjust the line height */
+    color: #333; /* Adjust the color as needed */
   }
 
   code {
@@ -308,6 +313,9 @@ nav ul li a {
   ul,
   ol {
     margin-top: 0;
+    font-family: "Cambria Math", sans-serif; /* Adjust the font family */
+    font-size: 1.1rem; /* Adjust the font size */
+    line-height: 1.8; /* Adjust the line height */
   }
 
   blockquote {
@@ -315,6 +323,9 @@ nav ul li a {
     margin-left: 0;
     color: $blockquote-text-color;
     border-left: 0.3rem solid $border-color;
+    font-family: "Open Sans", sans-serif; /* Adjust the font family */
+    font-size: 1.1rem; /* Adjust the font size */
+    line-height: 1.8; /* Adjust the line height */
 
     > :first-child {
       margin-top: 0;
@@ -335,17 +346,26 @@ nav ul li a {
 
     th {
       font-weight: bold;
+      font-family: "Open Sans", sans-serif; /* Adjust the font family */
+      font-size: 1.1rem; /* Adjust the font size */
+      line-height: 1.8; /* Adjust the line height */
     }
 
     th,
     td {
       padding: 0.5rem 1rem;
       border: 1px solid $table-border-color;
+      font-family: "Open Sans", sans-serif; /* Adjust the font family */
+      font-size: 1.1rem; /* Adjust the font size */
+      line-height: 1.8; /* Adjust the line height */
     }
   }
 
   dl {
     padding: 0;
+    font-family: "Open Sans", sans-serif; /* Adjust the font family */
+    font-size: 1.1rem; /* Adjust the font size */
+    line-height: 1.8; /* Adjust the line height */
 
     dt {
       padding: 0;
@@ -402,6 +422,7 @@ nav ul li a {
   margin-top: 1rem;
   color: #2c3e50; /* Adjust this color as needed */
   text-align: center;
+  font-family: "Cambria Math", sans-serif; /* Adjust the font family */
 }
 
 .post-date {
@@ -409,12 +430,14 @@ nav ul li a {
   color: #1a0dab; /* Adjust this color as needed */
   text-align: center;
   margin-bottom: 1.5rem;
+  font-family: "Cambria Math", sans-serif; /* Adjust the font family */
 }
 
 .post-content {
   line-height: 1.8;
-  font-size: 1.1rem;
+  font-size: 2rem;
   color: #333; /* Adjust this color as needed */
   max-width: 64rem;
   margin: 0 auto;
+  font-family: "Cambria Math", sans-serif; /* Adjust the font family */
 }
