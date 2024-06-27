@@ -121,7 +121,8 @@ a {
     display: flex;
     align-items: center;
     justify-content: space-between; // Spread out title and nav
-    padding-top: 1.5em;
+    padding-top: 1em;
+    margin: 2em;
     position: relative;
     z-index: 2;
   }
