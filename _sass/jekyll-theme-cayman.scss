@@ -108,20 +108,21 @@ a {
 .page-header {
   position: relative;
   color: $header-heading-color;
-  text-align: top;
+  text-align: center; /* Changed to center for better alignment */
   background-size: cover;
   background-position: center;
   height: 50vh; /* Adjust the height as needed */
   display: flex;
-  align-items: top;
-  justify-content: space-between;
-  padding: 0 5rem;
+  align-items: center; /* Changed to center for vertical alignment */
+  justify-content: center; /* Changed to center for horizontal alignment */
+  padding: 0 2rem; /* Adjusted padding for better responsiveness */
 
   .header-content {
     width: 100%;
     display: flex;
-    align-items: top;
-    justify-content: space-between;
+    flex-direction: column; /* Changed to column for stacking elements vertically */
+    align-items: center;
+    justify-content: center;
     position: relative;
     z-index: 2;
     padding-top: 0.5rem;
