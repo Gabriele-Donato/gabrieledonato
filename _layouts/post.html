@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ page.title }} - {{ site.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+</head>
+<body>
+  <header class="page-header" style="background-image: url({{ page.image | prepend: site.baseurl }});">
+    <div class="header-content">
+      <div class="site-title">
+        <h3><a href="{{ '/' | relative_url }}" style="color:white;text-decoration:none;">{{ site.title }}</a></h3>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="{{ '/about/' | relative_url }}" style="text-decoration:none">About</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  
+  <main class="main-content">
+    <article class="post">
+      <header class="post-header">
+        <h1 class="post-title">{{ page.title }}</h1>
+        <p class="post-date">{{ page.date | date: "%B %d, %Y" }}</p>
+      </header>
+      <div class="post-content">
+        {{ content }}
+      </div>
+    </article>
+  </main>
+  
+  <footer class="site-footer">
+    <p>Contact me at: <a href="mailto:gabriele.donato52@gmail.com">gabriele.donato52@gmail.com</a></p>
+  </footer>
+</body>
+</html>
