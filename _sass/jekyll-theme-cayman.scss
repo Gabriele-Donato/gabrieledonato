@@ -106,15 +106,19 @@ a {
 }
 
 .page-header {
-  position: relative;
+  position: fixed; // Fix the header at the top
+  top: 0;
+  left: 0;
+  width: 100%;
   color: $header-heading-color;
   background-size: contain; // Ensure the entire image is visible
   background-repeat: no-repeat; // Prevent the image from repeating
   background-position: center; // Center the image within the header
-  background-attachment: fixed;
+  background-attachment: scroll; // Allow the image to scroll with the page
   height: 60vh; // Adjust height as needed
   padding: 0 2rem;
   overflow: hidden;
+  z-index: 1000; // Ensure the header stays on top
 
   @include small {
     background-attachment: scroll;
@@ -143,6 +147,10 @@ a {
     justify-content: space-between;
     padding: 1rem 0;
   }
+}
+
+body {
+  padding-top: 60vh; // Ensure body content doesn't overlap the fixed header
 }
 
 .site-title {
