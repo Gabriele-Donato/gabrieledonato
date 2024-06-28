@@ -114,25 +114,25 @@ a {
   background-size: contain; // Ensure the entire image is visible
   background-repeat: no-repeat; // Prevent the image from repeating
   background-position: center; // Center the image within the header
-  background-attachment: scroll; // Allow the image to scroll with the page
+  background-attachment: fixed; // Keep the image fixed
   height: 60vh; // Adjust height as needed
   padding: 0 2rem;
   overflow: hidden;
   z-index: 1000; // Ensure the header stays on top
 
   @include small {
-    background-attachment: scroll;
+    background-attachment: fixed;
     min-height: 40vh;
   }
 
   // Overlay
   &::before {
     content: "";
-    position: absolute;
+    position: fixed; // Keep the overlay fixed
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 60vh; // Match the header height
     background: rgba(0, 0, 0, 0.6);
     z-index: 1;
   }
@@ -159,6 +159,7 @@ body {
     color: white;
   }
 }
+
 
 
 nav {
