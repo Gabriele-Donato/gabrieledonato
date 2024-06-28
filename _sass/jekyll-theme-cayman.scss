@@ -108,7 +108,7 @@ a {
 .page-header {
   position: relative;
   color: $header-heading-color;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
   background-attachment: fixed;
   height: 60vh;
