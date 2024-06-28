@@ -122,7 +122,7 @@ a {
     height: 100%;
     background: inherit;
     filter: brightness(50%); // Adjust the brightness as needed
-    z-index: -1; // Ensures the pseudo-element is behind the content
+    z-index: 1; // Ensures the pseudo-element is behind the content
   }
 }
 
