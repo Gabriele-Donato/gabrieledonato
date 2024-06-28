@@ -115,6 +115,11 @@ a {
   padding: 0 2rem;
   overflow: hidden; //  content does not overflow header
 
+  @include small {
+    background-attachment: scroll; // Change to scroll for small screens
+    min-height: 40vh; // Ensure a minimum height for small screens
+  }
+
   // Overlay
   &::before {
     content: "";
@@ -141,7 +146,7 @@ a {
 
 .site-title {  //site name in header 
   h4 {
-    margin-left: 1em;
+    margin: 0; 
     color: white;
   }
 }
@@ -163,7 +168,6 @@ nav {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    font-size: 1.5em;
 
     &:hover {
       text-decoration: underline;
