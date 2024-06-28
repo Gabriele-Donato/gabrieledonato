@@ -110,9 +110,10 @@ a {
   color: $header-heading-color;
   background-size: cover;
   background-position: center;
-  background-attachment: absolute; // fix background image
+  background-attachment: fixed;
   height: 60vh;
   padding: 0 2rem;
+  overflow: hidden; //  content does not overflow header
 
   // Overlay
   &::before {
@@ -129,7 +130,7 @@ a {
   // Content inside the header
   .header-content {
     position: relative;
-    z-index: 2; // Econtent above overlay
+    z-index: 2; // content above overlay
     width: 100%;
     display: flex;
     align-items: center;
@@ -139,9 +140,8 @@ a {
 }
 
 .site-title {  //site name in header 
-  h3{
+  h4 {
     margin-left: 1em;
-    font-size:3em;
     color: white;
   }
 }
@@ -163,7 +163,7 @@ nav {
     color: white;
     text-decoration: none;
     font-weight: bold;
-    font-size:1.5em;
+    font-size: 1.5em;
 
     &:hover {
       text-decoration: underline;
