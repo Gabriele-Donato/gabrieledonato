@@ -106,7 +106,7 @@ a {
 }
 
 .page-header {
-  position: fixed;
+  position: relative;
   color: $header-heading-color;
   background-size: cover;
   background-position: center;
@@ -123,7 +123,7 @@ a {
   // Overlay
   &::before {
     content: "";
-    position: fixed;
+    position: relative;
     top: 0;
     left: 0;
     width: 100%;
