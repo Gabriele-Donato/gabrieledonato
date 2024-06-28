@@ -108,16 +108,17 @@ a {
 .page-header {
   position: relative;
   color: $header-heading-color;
-  background-size: contain;
-  background-position: center;
+  background-size: contain; // Ensure the entire image is visible
+  background-repeat: no-repeat; // Prevent the image from repeating
+  background-position: center; // Center the image within the header
   background-attachment: fixed;
-  height: 60vh;
+  height: 60vh; // Adjust height as needed
   padding: 0 2rem;
-  overflow: hidden; //  content does not overflow header
+  overflow: hidden;
 
   @include small {
-    background-attachment: scroll; // Change to scroll for small screens
-    min-height: 40vh; // Ensure a minimum height for small screens
+    background-attachment: scroll;
+    min-height: 40vh;
   }
 
   // Overlay
@@ -128,14 +129,14 @@ a {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6); //opacity
-    z-index: 1; //overlay above image
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
   }
 
   // Content inside the header
   .header-content {
     position: relative;
-    z-index: 2; // content above overlay
+    z-index: 2;
     width: 100%;
     display: flex;
     align-items: center;
@@ -144,12 +145,13 @@ a {
   }
 }
 
-.site-title {  //site name in header 
+.site-title {
   h4 {
-    margin: 0; 
+    margin: 0;
     color: white;
   }
 }
+
 
 nav {
   ul {
