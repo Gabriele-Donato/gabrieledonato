@@ -113,6 +113,7 @@ a {
   height: 60vh;
   padding: 0 2rem;
   filter: brightness(50%);
+  z-index:0;
 }
 
 .header-content {
@@ -130,6 +131,8 @@ a {
     margin: 0;
     font-size: 2rem;
     color: white;
+    z-index:1;
+    
   }
 }
 
@@ -150,6 +153,7 @@ nav {
     color: white;
     text-decoration: none;
     font-weight: bold;
+    z-index:1;
 
     &:hover {
       text-decoration: underline;
