@@ -134,7 +134,7 @@ a {
 
   // Content inside the header
   .header-content {
-    position: fixed;
+    position: relative;
     z-index: 2; // content above overlay
     width: 100%;
     display: flex;
