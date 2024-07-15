@@ -5,6 +5,6 @@ permalink: /resources/
 image: /assets/images/rambosson.jpg
 ---
 
-#This page is being built
+## This page is being built
 
-## It will contain some useful resources for the study of statistics.
+### It will contain some useful resources for the study of statistics.
