@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Useful Resources
-permalink: /Resources/
+permalink: /resources/
 image: /assets/images/rambosson.jpg
 ---
 
