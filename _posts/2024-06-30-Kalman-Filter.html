@@ -19,33 +19,34 @@ image: /assets/images/rambosson.jpg
     <title>Derivation of the Kalman Filter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
-    <script>
-    MathJax = {
-      tex: {
-       inlineMath: [['$', '$'], ['\\(', '\\)']],
-       displayMath: [['$$', '$$'], ['\\[', '\\]']],
-       processEscapes: true,
-       processEnvironments: true
-     },
-      options: {
-        renderActions: {
-         find: [10, function (doc) { doc.findMath({elements: doc.processed.pageElements})}],
-         compile: [20, function (doc) { doc.compileMath(); }],
-         typeset: [30, function (doc) { doc.typesetMath(); }],
-         updateDocument: [40, function (doc) { doc.updateDocument(); }],
-         addMenu: [150, function (doc) { doc.menu() }]
-       }
-     },
-     chtml: {
-       scale: 0.9,
-       minScaleAdjust: 100, 
-       matchFontHeight: true
-     },
-     startup: {
-       typeset: true,
-        ready: () => {
-         MathJax.startup.defaultReady();
-         MathJax.startup.promise.then(() => {
+<script>
+  MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      displayMath: [['$$', '$$'], ['\\[', '\\]']],
+      processEscapes: true,
+      processEnvironments: true
+    },
+    options: {
+      renderActions: {
+        find: [10, function (doc) { doc.findMath({elements: doc.processed.pageElements})}],
+        compile: [20, function (doc) { doc.compileMath(); }],
+        typeset: [30, function (doc) { doc.typesetMath(); }],
+        updateDocument: [40, function (doc) { doc.updateDocument(); }],
+        addMenu: [150, function (doc) { doc.menu() }]
+      }
+    },
+    chtml: {
+      scale: 0.9, // Adjusts the scaling of the output
+      minScaleAdjust: 100, // Minimum scaling adjust (percentage)
+      matchFontHeight: true
+    },
+    startup: {
+      typeset: true,
+      ready: () => {
+        MathJax.startup.defaultReady();
+        MathJax.startup.promise.then(() => {
+          // Your code after MathJax is ready
         });
       }
     }
@@ -55,30 +56,16 @@ image: /assets/images/rambosson.jpg
     <script id="MathJax-script" async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style type="text/css">
-        body {
+ 
+.MathJax_Display {
+    max-width: 100%; /* Ensures that block math does not exceed the screen width */
+    overflow-x: hidden; /* Prevents horizontal scrolling */
+}
 
-        .MathJax_Display {
-            max-width: 100%;
-            overflow-x: hidden;
-            box-sizing: border-box;
-        }
-        .MathJax {
-            display: inline-block;
-            max-width: 100%; 
-           
-        }
-        sub, sup {
-            font-size: 75%;
-            line-height: 0;
-            position: relative;
-            vertical-align: baseline;
-        }
-        sub {
-            bottom: -0.25em;
-        }
-        sup {
-            top: -0.5em;
-        }
+.MathJax {
+    max-width: 100%; /* Prevents inline formulas from causing overflow */
+}
+
     </style>
 </head>
 <body>
