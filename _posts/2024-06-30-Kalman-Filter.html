@@ -20,23 +20,38 @@ image: /assets/images/rambosson.jpg
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
-      MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']]
-        },
-        svg: {
-          fontCache: 'global'
-        },
-        startup: {
-          pageReady: () => {
-            return MathJax.startup.defaultPageReady().then(() => {
-              MathJax.startup.document.state(0);
-              MathJax.startup.document.rerender();
-            });
-          }
-        }
-      };
-    </script>
+    MathJax = {
+      tex: {
+       inlineMath: [['$', '$'], ['\\(', '\\)']],
+       displayMath: [['$$', '$$'], ['\\[', '\\]']],
+       processEscapes: true,
+       processEnvironments: true
+     },
+      options: {
+        renderActions: {
+         find: [10, function (doc) { doc.findMath({elements: doc.processed.pageElements})}],
+         compile: [20, function (doc) { doc.compileMath(); }],
+         typeset: [30, function (doc) { doc.typesetMath(); }],
+         updateDocument: [40, function (doc) { doc.updateDocument(); }],
+         addMenu: [150, function (doc) { doc.menu() }]
+       }
+     },
+     chtml: {
+       scale: 0.9,
+       minScaleAdjust: 100, 
+       matchFontHeight: true
+     },
+     startup: {
+       typeset: true,
+        ready: () => {
+         MathJax.startup.defaultReady();
+         MathJax.startup.promise.then(() => {
+        });
+      }
+    }
+  };
+</script>
+
     <script id="MathJax-script" async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style type="text/css">
@@ -44,12 +59,12 @@ image: /assets/images/rambosson.jpg
 
         .MathJax_Display {
             max-width: 100%;
-            overflow-x: auto;
+            overflow-x: hidden;
             box-sizing: border-box;
         }
         .MathJax {
             display: inline-block;
-            white-space: nowrap;
+            max-width: 100%; 
            
         }
         sub, sup {
