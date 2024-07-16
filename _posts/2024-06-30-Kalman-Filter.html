@@ -12,7 +12,6 @@ Leveraging on the information at the preceding step, you modify your beliefs and
 The model specifies a structure of the world where observations are produced by latent states:"
 image: /assets/images/rambosson.jpg
 ---
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -20,33 +19,51 @@ image: /assets/images/rambosson.jpg
     <title></title>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>
-    <script src="mathjax-config.js"></script> <!-- Link to the external JS -->
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="mathjax-config.js"></script>
     <style type="text/css">
-      body {
-          font-family: Arial, sans-serif;
-      }
-      .centered {
-          text-align: center;
-      }
-      .math-display {
-          text-align: center;
-          display: block;
-          margin: 1em 0;
-      }
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 1em;
+        }
+        .MathJax_Display {
+            display: block;
+            width: 100%;
+            text-align: center;
+            overflow: hidden;
+        }
+        .MathJax_Display .MathJax {
+            display: inline-block;
+            max-width: 100%;
+            width: auto;
+        }
+        sub, sup {
+            font-size: 75%;
+            line-height: 0;
+            position: relative;
+            vertical-align: baseline;
+        }
+        sub {
+            bottom: -0.25em;
+        }
+        sup {
+            top: -0.5em;
+        }
     </style>
 </head>
 <body>
 <p>Filtering is a statistical technique used to extract information from
-a noisy signal. The core idea of this methodology is that the
-observations are produced by a vector of hidden states. While the
-observations are independent from each other, the hidden states follow a
-first-order Markov process (i.e. the state at time <span
+a noisy signal. In this article I will be exploring the Kalman filter,
+whose core idea is that the observations (assumed to be noisy) are
+produced by a vector of hidden states.</p>
+<p>While the observations are independent from each other, the hidden
+states follow a first-order Markov process (i.e. the state at time <span
 class="math inline">\(t\)</span> depends only on the state at time <span
 class="math inline">\(t - 1\)</span>).</p>
 <p>As an example consider the following: it is a pleasant day in the
-city park, and you amuse yourself observing people walking along a
+city park, and you amuse yourself by observing people walking along a
 fairly distant tree-lined trail, which is perfectly perpendicular to
 your position. In particular, you fix your attention on a certain
 person. At time <span class="math inline">\(t - 2\)</span> you observe
@@ -58,10 +75,9 @@ when time <span class="math inline">\(t - 1\)</span> finally comes, you
 see him at point <span class="math inline">\(p_{1.5}\)</span>, then he
 disappears again behind a large tree. Leveraging on the information at
 the preceding step, you modify your beliefs and refine your prediction
-for time <span class="math inline">\(t\)</span>.<mark></mark></p>
+for time <span class="math inline">\(t\)</span>.</p>
 <p><img src="{{ '/assets/images/post_images/kalman_filter/kalman_filter_DAG.png' | relative_url }}" style="width:3.38452in;height:2.08227in"
 alt="kalman_filter_DAG.png" /></p>
-<p><mark></mark></p>
 <p>Fig. 1 Example of structural time series where a set of hidden states
 <span class="math inline">\(\mathbf{x}\)</span>, partly observed or not
 observed, influence the dependent variable(s) <span
@@ -71,7 +87,7 @@ possible to infer anything about unobserved quantities if no data is
 available, and how it is possible to determine the ways in which the
 unobserved quantities become visible and produce certain observed
 outcomes.</p>
-<p><strong>A Structural Model</strong></p>
+<h2><strong>A Structural Model</strong></h2>
 <p>Assume a state vector <span class="math inline">\(\mathbf{x}\)</span>
 and a vector of observations <span
 class="math inline">\(\mathbf{y}\)</span>, then it possible to assume a
@@ -88,11 +104,11 @@ time <span class="math inline">\(t\)</span> depends on the state at time
 of <span class="math inline">\(t - 1\)</span> (is a first-order Markov
 process) through a “rule” specified by <span
 class="math inline">\(F\)</span>, called “transition matrix,” which
-describes how a state succeeds another. This evolution is not perfect an
-might be subjected to random noise <span
+describes how a state succeeds another. This evolution is not perfect
+and might be subjected to random noise <span
 class="math inline">\(\mathbf{w}_{t}\)</span>, whose associated matrix
 <span class="math inline">\(G\)</span> is referred to as to “control
-matrix”, and describes how external interventions perturb the
+matrix,” and describes how external interventions perturb the
 system.</p>
 <p>On the other hand, the observations at time <span
 class="math inline">\(t\)</span> are dependent on the latent state at
@@ -105,6 +121,10 @@ it is necessary to assume that the error terms are Gaussian with mean
 <span class="math inline">\(\mathbf{0}\)</span> and variance-covariance
 matrices <span class="math inline">\(\mathbf{Q}\)</span> and <span
 class="math inline">\(\mathbf{R}\)</span>.</p>
+<p><span class="math display">\[w_{t} \sim
+N(\mathbf{0},\mathbf{Q})\]</span></p>
+<p><span class="math display">\[e_{t} \sim
+N(\mathbf{0},\mathbf{R})\]</span></p>
 <p>It is possible to frame the problem in Bayesian terms as follows:
 “find a rule that states the beliefs about state <span
 class="math inline">\(\mathbf{x}_{t}\)</span> at time <span
@@ -114,24 +134,25 @@ formally, this is expressed in two steps: prediction and update.</p>
 <p><em><strong>prediction step</strong></em></p>
 <p><span class="math display">\[p(x_{t}|y_{1:t - 1}) = \int p(x_{t},x_{t
 - 1}|y_{1:t - 1})dx_{t - 1}\]</span></p>
-<p><span class="math display">\[\]</span></p>
 <p><span class="math display">\[= \int p(x_{t}|x_{t - 1})p(x_{t -
-1}|y_{1:t - 1})dx_{t - 1}\ \ \mathbf{(1}\mathbf{)}\]</span></p>
+1}|y_{1:t - 1})dx_{t - 1}\ \ \ \mathbf{(1)}\]</span></p>
 <p>Which is known at every time step if all the values, including the
 transition matrix, are arbitrarily initialised.</p>
 <p><em><strong>update step</strong></em></p>
 <p><span class="math display">\[p(x_{t}|y_{1:t}) \propto p(y_{t},y_{t -
-1}|x_{t})p(x_{t})\]</span></p>
+1}|x_{t})p(x_{t})\ \ \ \ \ By\ Bayes\ theorem\]</span></p>
+<p><mark></mark></p>
 <p><span class="math display">\[\approx p(y_{t}|y_{1:t -
 1},x_{t})p(y_{1:t - 1}|x_{t})p(x_{t})\]</span></p>
 <p>However, by the application of Bayes Theorem, it is possible to
-rewrite the last step as:</p>
+rewrite the last step as:<mark></mark></p>
+<p><mark></mark></p>
 <p><span class="math display">\[\approx p(y_{t}|x_{t})p(x_{t}|y_{1:t -
-1})\ \ \mathbf{(2}\mathbf{)}\]</span></p>
+1})\ \ \mathbf{(2)}\]</span><mark></mark></p>
 <p>Note that the second factor of <strong>(2)</strong> is equal to
 <strong>(1)</strong> first step, therefore the recursion is
 complete.</p>
-<p><strong>A Study of (2)</strong></p>
+<h2><strong>A Study of (2)</strong></h2>
 <p>Let’s consider more in depth <strong>(2)</strong>: note that the
 expression is made up of two distributions multiplied one by the other.
 The formula may be interpreted as a Bayesian update step, and since by
@@ -181,25 +202,23 @@ V\lbrack F\mathbf{x}_{\mathbf{t} - \mathbf{1}} +
 G\mathbf{w}_{\mathbf{t}}\rbrack\]</span></p>
 <p><span class="math display">\[= FV\lbrack\mathbf{x}_{\mathbf{t} -
 \mathbf{1}|\mathbf{t} - \mathbf{1}}\rbrack F^{T} +
-GV\lbrack\mathbf{w}_{\mathbf{t}}\rbrack G^{T}\ \
-\mathbf{(}\mathbf{3}\mathbf{)}\]</span></p>
+GV\lbrack\mathbf{w}_{\mathbf{t}}\rbrack G^{T}\ \ \
+\mathbf{(3)}\]</span></p>
 <p>To make things clearer it is possible to use <span
 class="math inline">\(\widehat{S}\)</span> to indicate the variance of
 the hidden states, with the indices indicating what is known and what is
 to be estimated.<a href="#fn1" class="footnote-ref" id="fnref1"
 role="doc-noteref"><sup>1</sup></a> Using the hypotheses introduced
-above, it possible to rewrite <strong>(3)</strong> as:<mark></mark></p>
-<p><mark></mark></p>
+above, it possible to rewrite <strong>(3)</strong> as:</p>
 <p><span class="math display">\[V\lbrack\mathbf{x}_{t|t - 1}\rbrack =
 {\widehat{S}}_{t|t - 1} = F{\widehat{S}}_{t - 1|t - 1}F^{T} +
-GQG^{T}\]</span><mark></mark></p>
-<p><mark></mark></p>
+GQG^{T}\]</span></p>
 <p>Since the noise is Gaussian,</p>
 <p><span class="math display">\[p(x_{t}|y_{1:t - 1}) \sim
 N({\widehat{\mathbf{x}}}_{\mathbf{t}|\mathbf{t} -
 \mathbf{1}},{\widehat{\mathbf{S}}}_{\mathbf{t}|\mathbf{t} -
 \mathbf{1}})\]</span></p>
-<p><strong>Calculating the Posterior</strong></p>
+<h2><strong>Calculating the Posterior</strong></h2>
 <p>The above passages have allowed the conclusion that at time <span
 class="math inline">\(t\)</span>, the prediction-update steps should be
 combined in the following way:</p>
@@ -233,15 +252,15 @@ distribution takes the form of<span
 class="math inline">\(N(\mu,\mathbf{\Sigma})\)</span>, where:</p>
 <p><span class="math display">\[\mathbf{\Sigma} = (H^{T}R^{- 1}y_{t} +
 {\widehat{S}}_{t|t - 1}^{- 1}{\widehat{x}}_{t|t - 1})^{- 1}\]</span></p>
-<p><span class="math display">\[\mu = \mathbf{\Sigma}(H^{T}R^{- 1}y +
-{\widehat{S}}_{t|t - 1}^{- 1}{\widehat{x}}_{t|t - 1})\]</span></p>
+<p><span class="math display">\[\mu = \mathbf{\Sigma}(H^{T}R^{- 1}y_{t}
++ {\widehat{S}}_{t|t - 1}^{- 1}{\widehat{x}}_{t|t - 1})\]</span></p>
 <p>Since <span class="math inline">\(\mu\)</span> and <span
 class="math inline">\(\mathbf{\Sigma}\)</span> represent the mean and
 value of the probability distribution of the states at time <span
 class="math inline">\(t\)</span>, the recursion is complete and what
 needs to be specified are only some initial values. The following
 chapter will provide an applied example.</p>
-<p><strong>Forecasting Amazon Stock Prices</strong></p>
+<h2><strong>Forecasting Amazon Stock Prices</strong></h2>
 <p>In order to put into practice what has been derived thus far,
 consider a time-series of Amazon stock prices.<a href="#fn2"
 class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>
@@ -261,27 +280,24 @@ events etc..), it is possible to ignore the matrix <span
 class="math inline">\(G\)</span>. The model for the target states
 is:</p>
 <p><span class="math display">\[\mathbf{x}_{t} = p_{t - 1} + v_{t -
-1}\Delta t + 0.5a_{t - 1}\Delta t^{2} + \mathbf{w}_{t}\ \ \
-\mathbf{(}\mathbf{4}\mathbf{)}\]</span><mark></mark></p>
-<p><mark></mark></p>
+1}\Delta t + 0.5a_{t - 1}\Delta t^{2} + \mathbf{w}_{t}\ \ \ \
+\mathbf{(4)}\]</span></p>
 <p>With <span class="math inline">\(p\)</span> being the price, <span
 class="math inline">\(v\)</span> the velocity and <span
 class="math inline">\(a\)</span> the acceleration. In particular,</p>
 <p><span class="math display">\[v_{t} = v_{t - 1} + a_{t - 1}\Delta_{t}
-+ w_{v}\ \ \mathbf{(}\mathbf{5}\mathbf{)}\]</span></p>
-<p><mark></mark></p>
++ w_{v}\ \ \ \mathbf{(5)}\]</span></p>
 <p><span class="math display">\[a_{t} = a_{t - 1} + w_{a}\ \ \
-\mathbf{(}\mathbf{6}\mathbf{)}\]</span></p>
+\mathbf{(6)}\]</span></p>
 <p>While the above equation might seem puzzling at first, try
 considering the price as the position of the stock. In that case, the
 kinematic laws require that the velocity and the position at time <span
 class="math inline">\(t\)</span> should be in the following relation
 (ignoring noise for ease of notation):</p>
-<p><mark></mark></p>
 <p><span class="math display">\[v_{t} = v_{t - 1} +
 \int_{0}^{t}adt\]</span></p>
 <p><span class="math display">\[x_{t} = x_{t - 1} + \int_{0}^{\Delta
-t}v_{t}dt\ \ \mathbf{(7}\mathbf{)}\]</span></p>
+t}v_{t}dt\ \ \ \mathbf{(7)}\]</span></p>
 <p>Expanding the calculations of <strong>(7)</strong> yields
 <strong>(4)</strong>, since the integral of acceleration is the velocity
 and the integral of velocity is the position (price).</p>
@@ -301,6 +317,14 @@ w_{p} \\
 w_{v} \\
 w_{a}
 \end{array} \right\rbrack\]</span></p>
+<p>Another element that might cause confusion is the inclusion of
+quadratic terms as parameters. It should be noted that the model remains
+linear in the variables, respecting the assumption of the underlying
+linearity of the state space. Nonetheless, the complexity of financial
+markets usually requires non-linear models, and the present discussion’s
+aim remains confined to a general introduction of the filtering
+technique, leaving a more involved modeling to a future article
+(particle filter.)</p>
 <p>Now it is necessary to model the error terms. As will be recalled, it
 is assumed that they follow a Gaussian distribution. While it would be
 possible to model them separately with mean <span
@@ -311,7 +335,9 @@ class="math inline">\(w_{a}\)</span> propagates to the noise of the
 other elements (as <strong>(7)</strong> would reasonably imply.)</p>
 <p>Note that <span class="math inline">\(V\lbrack w_{a}\rbrack =
 \sigma_{a}^{2}\)</span>, and that, in a process not dissimilar from the
-one carried out above:</p>
+one carried out above (the error could be included in
+<strong>(7)</strong> but it is possible to study the integrals
+separately due to the additivity of the operation):</p>
 <p><span class="math display">\[w_{v} = \int_{0}^{\Delta t}w_{a}dt =
 w_{a}\Delta t\]</span></p>
 <p><span class="math display">\[w_{x} = \int_{0}^{\Delta
@@ -324,19 +350,15 @@ t^{4}}{4}\sigma_{a}^{2}\]</span></p>
 <p>By substituting <strong>(4)</strong>, <strong>(5)</strong>,
 <strong>(6)</strong> into <span class="math inline">\(Cov(X,Y) =
 E\lbrack(x - E\lbrack x\rbrack)(y - E\lbrack y\rbrack)\rbrack\)</span>,
-it is possible to obtain:<mark></mark></p>
-<p><mark></mark></p>
+it is possible to obtain:</p>
 <p><span class="math display">\[Cov(x,v) = \frac{\Delta
-t^{3}}{2}\sigma_{a}^{2}\]</span><mark></mark></p>
+t^{3}}{2}\sigma_{a}^{2}\]</span></p>
 <p><span class="math display">\[Cov(x,a) = \frac{\Delta
 t^{2}}{2}\sigma_{a}^{2}\]</span></p>
-<p><mark></mark></p>
 <p><span class="math display">\[Cov(x,a) = \Delta
-t\sigma_{a}^{2}\]</span><mark></mark></p>
-<p><mark></mark></p>
+t\sigma_{a}^{2}\]</span></p>
 <p>Expressing all the calculations in compact form as the components of
-a “noise propagation” matrix</p>
-<p><mark></mark></p>
+a “noise propagation” matrix:</p>
 <p><span class="math display">\[Q = \sigma_{a}^{2}\begin{bmatrix}
 \frac{\Delta t^{4}}{4} &amp; \frac{\Delta t^{3}}{2} &amp; \frac{\Delta
 t^{2}}{2} \\
@@ -352,7 +374,8 @@ affects directly the price that will be observed at the next step
 without a scaling factor being required.</p>
 <p><span class="math display">\[H = \begin{bmatrix}
 1 &amp; 0 &amp; 0
-\end{bmatrix}\]</span></p>
+\end{bmatrix}\]</span><mark></mark></p>
+<p><mark></mark></p>
 <p>The only thing that remains to be defined is the measurement noise
 <span class="math inline">\(R\)</span>. In the present application, it
 will be a scalar since the only measurement is the price. It will be set
@@ -369,15 +392,44 @@ acceleration variance, the model trusts more the predictions.</p>
 <p>It should be noted, as remarked above that the noise is not modeled
 directly but through the variance and covariances implied by the
 distributions.</p>
-<p><mark></mark></p>
-<p>Here the results!<mark></mark></p>
+<p>Here the results!</p>
+
 <p><mark></mark><img src="{{ '/assets/images/post_images/kalman_filter/amazon_stock_price_prediction_kalman_filter.png' | relative_url }}"
 style="width:6.69305in;height:3.34653in" /><mark></mark><img
 src="{{ '/assets/images/post_images/kalman_filter/amazon_stock_price_prediction_kalman_filter_velocities.png' | relative_url }}"
 style="width:6.69305in;height:3.34653in" /><mark></mark></p>
 <p><img src="{{ '/assets/images/post_images/kalman_filter/amazon_stock_price_prediction_kalman_filter_accelerations.png' | relative_url }}"
 style="width:6.69305in;height:3.34653in" /></p>
-<p><strong>Goodbye ARIMA!<mark></mark></strong></p>
+
+<p>While it is possible to work a little bit more on the acceleration,
+and it will be the undertake of a future article, we can say without fear:</p>
+<h1 style="text-align:center"><strong>Goodbye ARIMA!</strong></h1>
+<p>The present derivations are based on the techniques that I have
+learned in my university courses, and they are no more than ordinary
+Bayesian praxis. However, I would like to introduce a number of
+references that might be useful.</p>
+<p>Charles, S. A. (2017). Kalman Filter: A Bayesian Approach. Available
+at:
+https://www.bme.jhu.edu/ascharles/wp-content/uploads/2020/01/KalmanFilterBayesDerivation.pdf.</p>
+<p>Masnadi-Shirazi, H., Masnadi-Shirazi, A. and Dastgheib, M.-A., 2019.
+A Step by Step Mathematical Derivation and Tutorial on Kalman Filters.
+<em>arXiv</em>. Available at: <a
+href="https://arxiv.org/abs/1910.03558"><u>https://arxiv.org/abs/1910.03558</u></a>.</p>
+<p>Marwade, A. (2020). Kalman Filtering: An Intuitive Guide Based on
+Bayesian Approach. <em>Medium.</em> Available at: <a
+href="https://towardsdatascience.com/kalman-filtering-an-intuitive-guide-based-on-bayesian-approach-49c78b843ac7"><u>https://towardsdatascience.com/kalman-filtering-an-intuitive-guide-based-on-bayesian-approach-49c78b843ac7</u></a>.
+<em><strong>This is a member-only story, refer to Charles’
+article.</strong></em></p>
+<p>Jones, W. (2021). Forget ARIMA — Going Bayesian with Time Series
+Analysis. <em>EMBECOSM</em>. Available at: <a
+href="https://www.embecosm.com/2021/12/18/forget-arima-going-bayesian-with-time-series-analysis/"><u>https://www.embecosm.com/2021/12/18/forget-arima-going-bayesian-with-time-series-analysis/</u></a>.</p>
+<p>I <em>would advise the reader to have a look at this link contained
+in the Jones’ article:
+https://web.mit.edu/kirtley/kirtley/binlustuff/literature/control/Kalman
+filter.pdf. Moreover, the article provides an a link to a GitHub
+repository with an implementation of the filter using Tensorflow,
+compare</em> <em>it with my low-level implementation in numpy!
+<strong>soon on GitHub</strong></em>.</p>
 <aside id="footnotes" class="footnotes footnotes-end-of-document"
 role="doc-endnotes">
 <hr />
