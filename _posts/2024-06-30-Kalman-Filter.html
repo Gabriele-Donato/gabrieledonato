@@ -16,28 +16,45 @@ image: /assets/images/rambosson.jpg
 <html>
 <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>Derivation of the Kalman Filter</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script>
+      MathJax = {
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        svg: {
+          fontCache: 'global'
+        },
+        startup: {
+          pageReady: () => {
+            return MathJax.startup.defaultPageReady().then(() => {
+              MathJax.startup.document.state(0);
+              MathJax.startup.document.rerender();
+            });
+          }
+        }
+      };
+    </script>
     <script id="MathJax-script" async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script src="mathjax-config.js"></script>
     <style type="text/css">
         body {
             font-family: Arial, sans-serif;
             line-height: 1.6;
             margin: 0;
             padding: 1em;
+            border: none; /* Ensuring no borders */
         }
         .MathJax_Display {
-            display: block;
-            width: 100%;
-            text-align: center;
-            overflow: hidden;
-        }
-        .MathJax_Display .MathJax {
-            display: inline-block;
             max-width: 100%;
+            overflow-x: auto; /* Allows scrolling on small screens */
+        }
+        .MathJax {
+            display: inline-block;
             width: auto;
+            max-width: 100%;
         }
         sub, sup {
             font-size: 75%;
