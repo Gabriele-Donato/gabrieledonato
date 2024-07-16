@@ -20,23 +20,28 @@ image: /assets/images/rambosson.jpg
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
-      MathJax = {
-        tex: {
-          inlineMath: [['$', '$'], ['\\(', '\\)']],
-          linebreaks: { automatic: true } 
-        },
-        svg: {
-          fontCache: 'global'
-        },
-        startup: {
-          pageReady: () => {
-            return MathJax.startup.defaultPageReady().then(() => {
-              MathJax.startup.document.state(0);
-              MathJax.startup.document.rerender();
-            });
-          }
-        }
-      };
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$'], ['\\(', '\\)']],
+    displayMath: [['$$', '$$'], ['\\[', '\\]']],
+    processEscapes: true,
+    processEnvironments: true,
+    linebreaks: { automatic: true, width: "container" } 
+  },
+  chtml: {
+    scale: 1,  
+    minScaleAdjust: 75,  
+    matchFontHeight: true
+  },
+  startup: {
+    pageReady: () => {
+      return MathJax.startup.defaultPageReady().then(() => {
+        MathJax.startup.document.state(0);
+        MathJax.startup.document.rerender();
+      });
+    }
+  }
+};
     </script>
     <script id="MathJax-script" async
       src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -49,12 +54,13 @@ image: /assets/images/rambosson.jpg
 
         .MathJax_Display {
             max-width: 100%;
-            overflow-x: scroll;
+            overflow-x: auto;
         }
         .MathJax {
             display: inline-block;
             width: auto;
             max-width: 100%;
+            overflow-x: auto;
         }
         sub, sup {
             font-size: 75%;
