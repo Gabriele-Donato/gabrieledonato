@@ -98,7 +98,7 @@ see him at point <span class="math inline">\(p_{1.5}\)</span>, then he
 disappears again behind a large tree. Leveraging on the information at
 the preceding step, you modify your beliefs and refine your prediction
 for time <span class="math inline">\(t\)</span>.</p>
-<p><img src="{{ '/assets/images/post_images/kalman_filter/kalman_filter_DAG.png' | relative_url }}" style="width:3.38452in;height:2.08227in"
+<p><img src="{{ '/assets/images/post_images/kalman_filter/kalman_filter_DAG.png' | relative_url }}" style="width:3.38452in;height:2.08227in; align:center"
 alt="kalman_filter_DAG.png" /></p>
 <p>Fig. 1 Example of structural time series where a set of hidden states
 <span class="math inline">\(\mathbf{x}\)</span>, partly observed or not
@@ -350,7 +350,7 @@ technique, leaving a more involved modeling to a future article
 <p>For the time being the acceleration term should be regarded as an approximation, it will be useful to compare it
 with the more advanced models. It might be interesting to note how the model performs well in the linear part and finds some difficulties 
 in the quadratic part.</p>
-<p>Nonetheless, consider the structure of matrix <span class="math inline">\H</span> in the application to stock prices forcasting: 
+<p>Nonetheless, consider the structure of matrix <span class="math inline">\(H\)</span> in the application to stock prices forcasting: 
 the only observed variable is the price, while velocity and acceleration get multiplied by zero. While this partly mitigates 
 the problems presented thus far, it is withouth prejudice to the above criticisms and discussion.</p>
 <p>Now it is necessary to model the error terms. As will be recalled, it
