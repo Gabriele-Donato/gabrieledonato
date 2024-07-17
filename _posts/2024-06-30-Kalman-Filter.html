@@ -341,12 +341,18 @@ w_{a}
 \end{array} \right\rbrack\]</span></p>
 <p>Another element that might cause confusion is the inclusion of
 quadratic terms as parameters. It should be noted that the model remains
-linear in the variables, respecting the assumption of the underlying
-linearity of the state space. Nonetheless, the complexity of financial
+linear in the variables, however, given the presence of a quadratic term, the 
+observations cannot be construed as a linear function of the state space. Notably, the complexity of financial
 markets usually requires non-linear models, and the present discussion’s
 aim remains confined to a general introduction of the filtering
 technique, leaving a more involved modeling to a future article
 (particle filter.)</p>
+<p>For the time being the acceleration term should be regarded as an approximation, it will be useful to compare it
+with the more advanced models. It might be interesting to note how the model performs well in the linear part and finds some difficulties 
+in the quadratic part.</p>
+<p>Nonetheless, consider the structure of matrix <span class="math inline">\H</span> in the application to stock prices forcasting: 
+the only observed variable is the price, while velocity and acceleration get multiplied by zero. While this partly mitigates 
+the problems presented thus far, it is withouth prejudice to the above criticisms and discussion.</p>
 <p>Now it is necessary to model the error terms. As will be recalled, it
 is assumed that they follow a Gaussian distribution. While it would be
 possible to model them separately with mean <span
