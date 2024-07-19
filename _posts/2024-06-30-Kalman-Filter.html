@@ -14,6 +14,9 @@ image: /assets/images/rambosson.jpg
 ---
 <!DOCTYPE html>
 <html>
+
+<!DOCTYPE html>
+<html>
 <head>
     <meta charset="utf-8">
     <title>Derivation of the Kalman Filter</title>
@@ -51,25 +54,30 @@ image: /assets/images/rambosson.jpg
             max-width: 100%;
             margin: 0;
             padding: 0;
-            overflow-x: auto;
+            font-size: 16px; /* Base font size */
+            overflow-x: hidden;
         }
 
-        .MathJax_Display {
+        .MathJax_Display, .math.display {
             max-width: 100%;
+            overflow-x: auto; /* Enables horizontal scrolling */
+            overflow-y: hidden; /* Disables vertical scrolling */
             display: block;
-            white-space: normal; /* Allow breaking within the formulas */
-            word-wrap: break-word; /* Ensure long words break correctly */
-            overflow-x: scroll;
+            white-space: nowrap; /* Ensures no wrapping */
         }
 
-        .MathJax {
-            display: inline-block;
-            width: auto;
-            max-width: 100%;
+        .math {
+            font-size: 1rem; /* Responsive font size for math formulas */
+        }
+
+        @media (max-width: 768px) {
+            .MathJax_Display, .math.display {
+                font-size: 0.8rem; /* Smaller font size for smaller screens */
+            }
         }
 
         sub, sup {
-            font-size: 75%;
+            font-size: 0.75em; /* Proper scaling for subscripts and superscripts */
             line-height: 0;
             position: relative;
             vertical-align: baseline;
@@ -82,8 +90,14 @@ image: /assets/images/rambosson.jpg
         sup {
             top: -0.5em;
         }
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
     </style>
 </head>
+
 <body>
 <p>Filtering is a statistical technique used to extract information from
 a noisy signal. In this article I will be exploring the Kalman filter,
