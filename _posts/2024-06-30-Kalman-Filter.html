@@ -20,56 +20,65 @@ image: /assets/images/rambosson.jpg
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script>
-MathJax = {
-  tex: {
-    inlineMath: [['$', '$'], ['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']],
-    processEscapes: true,
-    processEnvironments: true,
-    linebreaks: { automatic: true, width: "container" } 
-  },
-  chtml: {
-    scale: 1,  
-    minScaleAdjust: 75,  
-    matchFontHeight: true
-  },
-  startup: {
-    pageReady: () => {
-      return MathJax.startup.defaultPageReady().then(() => {
-        MathJax.startup.document.state(0);
-        MathJax.startup.document.rerender();
-      });
-    }
-  }
-};
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']],
+        processEscapes: true,
+        processEnvironments: true,
+        linebreaks: { automatic: true, width: "container" },
+        tags: 'ams'
+      },
+      chtml: {
+        scale: 1,
+        minScaleAdjust: 75,
+        matchFontHeight: true
+      },
+      startup: {
+        pageReady: () => {
+          return MathJax.startup.defaultPageReady().then(() => {
+            MathJax.startup.document.state(0);
+            MathJax.startup.document.rerender();
+          });
+        }
+      }
+    };
     </script>
-    <script id="MathJax-script" async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style type="text/css">
         body, html {
             width: 100%;
             max-width: 100%;
-          }
+            margin: 0;
+            padding: 0;
+            overflow-x: auto;
+        }
 
         .MathJax_Display {
-            max-width: auto;
             max-width: 100%;
- 	    overflow-x: auto; 
+            display: block;
+            white-space: normal; /* Allow breaking within the formulas */
+            word-wrap: break-word; /* Ensure long words break correctly */
+            overflow-x: scroll;
         }
+
         .MathJax {
             display: inline-block;
             width: auto;
             max-width: 100%;
         }
+
         sub, sup {
             font-size: 75%;
             line-height: 0;
             position: relative;
             vertical-align: baseline;
         }
+
         sub {
             bottom: -0.25em;
         }
+
         sup {
             top: -0.5em;
         }
