@@ -22,7 +22,7 @@ a more complete account should not avoid the question of _why is asynchronous pr
 The answers to these questions demonstrate that the coding approach chosen here is optimal in terms of the resources used.
 \
 \
-\
+
 # Why this is a boring interesting project
 \
 A "sitemap" is the representation of the structure of a website: a list of unique links starting from a given page (usually the homepage) and proceeding to increasing depths within the structure of the website.
@@ -51,12 +51,13 @@ professional. Nonetheless, _scrapy_ itself does not work with magic (even though
 The latter will be the core element of the ensuing discussion. Therefore, even if the project is not as exciting as making [a news retriever with real time processing](), it 
 is the place to start. Let's put our hands to work!
 \
-\
+
 # The structure of a Sitemap
 \
 As explained above, sitemaps are a serious thing and a does exist: check [sitemap.com](https://www.sitemaps.org/protocol.html). The following table taken from the website summarizes
 the main tag (note that even when the sitemap is present, most are optional):
-<img alt='sitemap_tags_table' src = "{{ /assets/images/post_images/sitemap_project/sitemap_tags_table.png | relative_url}}">
+\
+<img alt='sitemap_tags_table' src = "{{ '/assets/images/post_images/sitemap_project/sitemap_tags_table.png' | relative_url}}">
 \
 A sitemap may have at most 50,000 urls and be no more of 50MB, but it is possible to join multiple sitemaps by specifying an index through the <sitemapindex> tag.
 Moreover, special characters should be escaped and the encoding should be UTF-8. Generally, sitemaps are stored in XML files, and they can be validated through
@@ -64,7 +65,7 @@ schemas (e.g. [](http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd)).
 \
 These problems become relevant when storing the scraped data, therefore will appear again only at the end.
 \
-\
+
 # S
 \
 
