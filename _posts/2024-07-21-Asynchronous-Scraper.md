@@ -5,6 +5,7 @@ date:   2024-07-21 10:00:00 +0200
 categories: jekyll update
 excerpt: ""
 image: /assets/images/rambosson.jpg
+published: false
 ---
 
 ## writing in progess...
@@ -20,11 +21,10 @@ The reason why I chose this strategy is because I believe that asynchronous
 programming is far from intuitive and can be better understood by applying it to a specific case. Nonetheless, the interested reader should be aware that things are not necessarily as straightforward as they migt seem, and that 
 a more complete account should not avoid the question of _why is asynchronous programming better that multithreading or multiprocessing in the present case?_, and ultimately of _what are asyncio, multithreading and multiprocessing about?_
 The answers to these questions demonstrate that the coding approach chosen here is optimal in terms of the resources used.
-\
-\
+
 
 # Why this is a boring interesting project
-\
+
 A "sitemap" is the representation of the structure of a website: a list of unique links starting from a given page (usually the homepage) and proceeding to increasing depths within the structure of the website.
 The depth of a sitemap can be chosen 
 arbitrarily, and ideally should include all of the pages of a website. 
@@ -50,24 +50,25 @@ Nowadays, nobody has to build a sitemap generator, or even a custom scraper: thi
 professional. Nonetheless, _scrapy_ itself does not work with magic (even though it might look like so given the impressive performances), but using asynchronous programming. 
 The latter will be the core element of the ensuing discussion. Therefore, even if the project is not as exciting as making [a news retriever with real time processing](), it 
 is the place to start. Let's put our hands to work!
-\
 
 # The structure of a Sitemap
-\
+
 As explained above, sitemaps are a serious thing and a does exist: check [sitemap.com](https://www.sitemaps.org/protocol.html). The following table taken from the website summarizes
 the main tag (note that even when the sitemap is present, most are optional):
 \
+\
 <img alt='sitemap_tags_table' src = "{{ '/assets/images/post_images/sitemap_project/sitemap_tags_table.png' | relative_url}}">
+\
 \
 A sitemap may have at most 50,000 urls and be no more of 50MB, but it is possible to join multiple sitemaps by specifying an index through the <sitemapindex> tag.
 Moreover, special characters should be escaped and the encoding should be UTF-8. Generally, sitemaps are stored in XML files, and they can be validated through
 schemas (e.g. [](http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd)).
 \
 These problems become relevant when storing the scraped data, therefore will appear again only at the end.
-\
 
 # S
-\
+
+sssss
 
 
 
