@@ -5,7 +5,7 @@ date:   2024-07-21 10:00:00 +0200
 categories: jekyll update
 excerpt: ""
 image: /assets/images/rambosson.jpg
-published: false
+published: true
 ---
 
 ## writing in progess...
@@ -24,6 +24,7 @@ programming is far from intuitive and can be better understood by applying it to
 a more complete account should not avoid the question of _why is asynchronous programming better that multithreading or multiprocessing in the present case?_, and ultimately of _what are asyncio, multithreading and multiprocessing about?_
 The answers to these questions demonstrate that the coding approach chosen here is optimal in terms of the resources used.
 </p>
+
 ## Why this is a boring interesting project
 
 A "sitemap" is the representation of the structure of a website: a list of unique links starting from a given page (usually the homepage) and proceeding to increasing depths within the structure of the website.
