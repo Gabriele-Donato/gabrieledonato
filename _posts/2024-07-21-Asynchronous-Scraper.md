@@ -11,6 +11,7 @@ published: true
 ## writing in progess...
 ## this is a test-draft, the date is not correct
 
+<div style= 'text-align: justify'>
 This article explores the creation of an asynchronous sitemap generator in Python. The code for this project can be found [here](https://github.com/Gabriele-Donato/website-materials-/blob/Scraping/Asynchronous_Sitemap_Generator/Asynchronous_Sitemap_Generator.ipynb).
 However, before introducing the tools that will be used, I would like to give a sense of the utility of what has been developed. The first
 and foremost aim of my work was experimenting with the _asyncio_ library of Python, I like this library because it makes non-linear
@@ -117,6 +118,6 @@ import asyncio
 from bs4 import BeautifulSoup 
 ```
 
-
+</div>
 
 [^1]: For instance, once I scraped the European Parliament website for retrieving the contributions of the partisans during plenary sessions. If I had to scrape the whole website I would never have accomplished the task.
