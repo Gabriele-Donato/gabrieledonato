@@ -5,11 +5,11 @@ date:   2024-07-21 10:00:00 +0200
 categories: jekyll update
 excerpt: ""
 image: /assets/images/rambosson.jpg
-published: false
+published: true
 ---
 
 ## writing in progess...
-## this is a draft 
+## this is a test-draft, the date is not correct
 
 This article explores the creation of an asynchronous sitemap generator in Python. The code for this project can be found [here](https://github.com/Gabriele-Donato/website-materials-/blob/Scraping/Asynchronous_Sitemap_Generator/Asynchronous_Sitemap_Generator.ipynb).
 However, before introducing the tools that will be used, I would like to give a sense of the utility of what has been developed. The first
@@ -23,7 +23,7 @@ a more complete account should not avoid the question of _why is asynchronous pr
 The answers to these questions demonstrate that the coding approach chosen here is optimal in terms of the resources used.
 
 
-# Why this is a boring interesting project
+## Why this is a boring interesting project
 
 A "sitemap" is the representation of the structure of a website: a list of unique links starting from a given page (usually the homepage) and proceeding to increasing depths within the structure of the website.
 The depth of a sitemap can be chosen 
@@ -48,10 +48,11 @@ reason it is common practice to check first if any API does exist for the info n
 \
 Nowadays, nobody has to build a sitemap generator, or even a custom scraper: this is fun and instructive, but frameworks like _scrapy_ make the process immediately scalable and 
 professional. Nonetheless, _scrapy_ itself does not work with magic (even though it might look like so given the impressive performances), but using asynchronous programming. 
-The latter will be the core element of the ensuing discussion. Therefore, even if the project is not as exciting as making [a news retriever with real time processing](), it 
+The latter will be the core element of the ensuing discussion. Therefore, even if the project is not as exciting as making a news retriever with real time processing (under construction by the way),
+ it 
 is the place to start. Let's put our hands to work!
 
-# The structure of a Sitemap
+## The structure of a Sitemap
 
 As explained above, sitemaps are a serious thing and a does exist: check [sitemap.com](https://www.sitemaps.org/protocol.html). The following table taken from the website summarizes
 the main tag (note that even when the sitemap is present, most are optional):
@@ -62,13 +63,60 @@ the main tag (note that even when the sitemap is present, most are optional):
 \
 A sitemap may have at most 50,000 urls and be no more of 50MB, but it is possible to join multiple sitemaps by specifying an index through the <sitemapindex> tag.
 Moreover, special characters should be escaped and the encoding should be UTF-8. Generally, sitemaps are stored in XML files, and they can be validated through
-schemas (e.g. [](http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd)).
+schemas (e.g. [here](http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd)).
 \
 These problems become relevant when storing the scraped data, therefore will appear again only at the end.
 
-# S
+## Multithreading and multiprocessing
 
-sssss
+My experience with asynchronous programming has developed as a necessity to make more efficient a webscraper. When I started, however, I used multithreading.
+To be sure, they are not that extremely different and both suceed at optimising the speed of a scraper.
+\
+Imagine the hypothetical scenario where a robot, called Worker, has to plough the land. When Worker has to accomplish a task a human loads in it an sd card with the 
+instructions. In this scenario the sd about "agricultural-skills" had been loaded, therefore the land-ploughing activity can be seen as an instance of a corresponding
+program (much like a Word window for writing can be seen as an instance of a the Word program). An instance of a program is called a **process**.
+\
+A process is made up of different components. Ploughing is a complex activity: you have to check not to inavertently hit a stone, because you might break your tool and injure yourself;
+you have to pay attention to the sourrandings (is the farmer walking by?); and to the work itself (are you maintaining a steady pace, buring the debris and weeds properly? are you
+handling the tools in the correct way?). Similarly, a Word instance will have to check orthography and language as you write. These actvities and sub-activities that contribute to an 
+instance of a program are called **threads**.
+\
+Multiprocessing refers to the _parallel_ computation distributed among
+different central processing units (CPUs) in an asymmetric or symmetric fashion. Asymmetric multiprocessing refers to an implementation that 
+treats the CPUs as being in a relation of master-slave: one CPU (the master) assigns the tasks to the slaves. This might lead to 
+an inefficient allocation of work between the resources. On the other hand, symmetric multiprocessing allows the CPUs to communicate through
+a shared memory, so that each can self-schedule their tasks. Of course, designing a symmetric multiprocessing systemem is comparatively more 
+challenging because one has to manage how the CPUs interact over the shared resources. Multiprocess Worker is one that can plough and sing at the same time.
+\
+Multithreading, on the other hand, refers to the creation of a high number of threads within a process to increase its performance. Multithreaded Worker is one
+that can handle the tasks of its ploughing program with more speed and ease. Indeed, ploughing is a complext task composed by other complex tasks: determining whether 
+he is handling the tools in the correct way, require access to both his hand-sensors and to his sight-sensors. Notably, the threads should participate to the same space in the memory:
+there would be no point in coordinating eye and hand if the coordinating mechanism is unable to know _at the same time_ what are the inputs from the two sensors.
+\
+To summarise, while multiprocessing operates at the hardware level and manages to achieve real _parallelism_ (different task on different CPUs), multithreading
+operates at the software level and simulates parallelism in ways that will be clarified later. While symmetric multiprocessing involves a shared memory space, 
+multithreading involves a shared memory _within_ the process (threads share memory, code and file _of the process_).
+\
+In the context of web-scraping there is no point in using an increased computing power (multiprocessing), since the final performance only depends 
+from the speed of the websites to load their contents, and from how we process and store them. A multithreaded scraper, having to accomplish the task of 
+retrieving the text of a poage, on the other hand, is able 
+to create, within the same code, multiple webdrivers and use the loading time of the pages to jump from one page to another until the task is completed.
+For this to happen, it is necessary to spread the work evenly among threads (each webdriver should scrape roughly the same amount of pages in order to avoid
+that some of them sit idle), and it should be carefully avoided that two webdrivers end up on the same page trying to perform the same task since they would block each other (here 
+sitemaps become crucial because they list _unique_ links, and the multithreaded-crawler is not required to blindly explore the website).
+\
+The above is not dissimilar from what happens in an asynchronous scraper. In the latter case, however, the jump from page to page happens withing a single thread,
+making asynchronous programming a better choice: one webdriver accomplishes the work, and all the problems related with worker-management are avoided.
+
+## How is asynchronicity achieved?
+
+## Project 
+In the firsft
+```python 
+import aiohttp  
+import asyncio 
+from bs4 import BeautifulSoup 
+```
 
 
 
