@@ -5,7 +5,7 @@ date:   2024-07-21 10:00:00 +0200
 categories: jekyll update
 excerpt: ""
 image: /assets/images/rambosson.jpg
-published: true
+published: false
 ---
 
 # UNDER REVIEW 
@@ -17,25 +17,24 @@ p {text-align:'justify'}
 ### writing in progess... this is a draft
 
 
-<p style="text-align: justify">
+<p>
 This article explores the creation of an asynchronous sitemap generator in Python. The code for this project can be found 
-<a href="https://github.com/Gabriele-Donato/website-materials-/blob/Scraping/Asynchronous_Sitemap_Generator/Asynchronous_Sitemap_Generator.ipynb">here</a>
+<a href="https://github.com/Gabriele-Donato/website-materials-/blob/Scraping/Asynchronous_Sitemap_Generator/Asynchronous_Sitemap_Generator.ipynb">here</a>. 
 However, before introducing the tools that will be used, I would like to give a sense of the utility of what has been developed. The first
-and foremost aim of my work was experimenting with the _asyncio_ library of Python, I like this library because it makes non-linear
-programming accessible. </p>
-
-<p style="text-align: justify">
-I reserve a more thorough account of the concurrency/parallel programming tools offered by Python to a future article (or to updates of this article), for the moment I will limit the discussion to an applied project.
-The reason why I chose this strategy is because I believe that asynchronous
-programming is far from intuitive and can be better understood by applying it to a specific case. Nonetheless, the interested reader should be aware that things are not necessarily as straightforward as they migt seem, and that 
-a more complete account should not avoid the question of <i>why is asynchronous programming better that multithreading or multiprocessing in the present case?</i>, 
-and ultimately of <i>what are asyncio, multithreading and multiprocessing about?</i>
-The answers to these questions demonstrate that the coding approach chosen here is optimal in terms of the resources used.
+and foremost aim of my work was experimenting with the <i>asyncio</i> library of Python, which I like because it makes non-linear
+programming accessible. 
 </p>
 
-## Why this is a boring interesting project
+<p>
+The aim of this article is also to discuss the concurrency/parallelism tools available for Python. The reason why I decided to deal with a twofold taks (i.e. presenting an applied project and enter a more general discussion 
+about tools), is not to avoid questions like: <i>why is asynchronous programming better that multithreading or multiprocessing in the present case?</i>, 
+and ultimately of <i>what are asyncio, multithreading and multiprocessing about?</i> While I acknowledge the fact that this is not the classical approach, in my own view it might eliminate some 
+false opinions about the concerned tools, giving a practical context to asynchronous programming, which I believe to be far from obvious.
+</p>
 
-<p style="text-align: justify">
+<h2> Why this is a boring interesting project</h2>
+
+<p>
 A "sitemap" is the representation of the structure of a website: a list of unique links starting from a given page (usually the homepage) and proceeding to increasing depths within the structure of the website.
 The depth of a sitemap can be chosen 
 arbitrarily, and ideally should include all of the pages of a website. 
@@ -45,18 +44,18 @@ or whether it is more difficult to reach man-related product than woman-related 
 these cases the depth of those pages with respect to the homepage may be an information of crucial value.
 </p>
 
-<p style="text-align: justify">
+<p>
 A good sitemap is also a guide for browsers through a what is known as _priority_: a number that helps indexing the pages depending on the importance given to them by the websmaster. Other useful indications may include the date
 of last modification, and the number of visits that a certain page has received. 
 </p>
 
-<p style="text-align: justify">
+<p>
 Although it may be an element of particular importance, websites may or may not have sitemaps. If the sitemap is not available, and the information is needed,
 scraping is the way to go. However, if the sitemap is available, it should be downloaded from the website since it surely lists what has been deemed important by
 the webmaster. 
 </p>
 
-<p style="text-align: justify">
+<p>
 What is fascinating about sitemaps, is that, when scraping is involved, they are almost the equivalent of a geographic-map: if you know precisely how to go from 
 one place to another, you don't have to meander or risk getting lost. In the case of sitemaps, the story is a little bit different, but not that much: since it is 
 a list of links, the scraper can teleport itself from a page to another. However, this does not imply that such a program will also be efficient since websites take their 
@@ -64,21 +63,19 @@ time to load, and the bandwidth may be scarce. Moreover, does it really make sen
 reason it is common practice to check first if any API does exist for the info needed.
 </p>
 
-<p style="text-align: justify">
+<p>
 Nowadays, nobody has to build a sitemap generator, or even a custom scraper: this is fun and instructive, but frameworks like <i>scrapy</i> make the process immediately scalable and 
 professional. Nonetheless, _scrapy_ itself does not work with magic (even though it might look like so given the impressive performances), but using asynchronous programming. 
 The latter will be the core element of the ensuing discussion. Therefore, even if the project is not as exciting as making a news retriever with real time processing (under construction by the way),
 it is the place to start. Let's put our hands to work!
 </p>
 
-## The structure of a Sitemap
+<h2>The structure of a Sitemap</h2>
 
-<p style="text-align: justify">
+<p>
 As explained above, sitemaps are a serious thing and a does exist: check <a href="https://www.sitemaps.org/protocol.html">sitemap.org</a>. The following table taken from the website summarizes
 the main tag (note that even when the sitemap is present, most are optional):
 </p>
-\
-\
 <table>
 	<tr>
 		<th>Attribute</th>
