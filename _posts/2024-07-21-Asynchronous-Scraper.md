@@ -11,7 +11,7 @@ about tools), is not to avoid questions like: <i>why is asynchronous programming
 and ultimately of <i>what are asyncio, multithreading and multiprocessing about?</i> While I acknowledge the fact that this is not the classical approach, in my own view it might eliminate some 
 false opinions about the concerned tools, giving a practical context to asynchronous programming, which I believe to be far from obvious."
 image: /assets/images/rambosson.jpg
-published: false
+published: true
 ---
 
 # UNDER REVIEW 
