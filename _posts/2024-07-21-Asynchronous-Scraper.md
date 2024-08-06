@@ -3,9 +3,15 @@ layout: default
 title:  "Coding an Asynchronous Sitemap Generator (With Full Code on Github)"
 date:   2024-07-21 10:00:00 +0200
 categories: jekyll update
-excerpt: ""
+excerpt: "This article explores the creation of an asynchronous sitemap generator in Python.
+However, before introducing the tools that will be used, I would like to give a sense of the utility of what has been developed. The first
+and foremost aim of my work was experimenting with the <i>asyncio</i> library of Python, which I like because it makes non-linear
+programming accessible. The aim of this article is also to discuss the concurrency/parallelism tools available for Python. The reason why I decided to deal with a twofold taks (i.e. presenting an applied project and enter a more general discussion 
+about tools), is not to avoid questions like: <i>why is asynchronous programming better that multithreading or multiprocessing in the present case?</i>, 
+and ultimately of <i>what are asyncio, multithreading and multiprocessing about?</i> While I acknowledge the fact that this is not the classical approach, in my own view it might eliminate some 
+false opinions about the concerned tools, giving a practical context to asynchronous programming, which I believe to be far from obvious."
 image: /assets/images/rambosson.jpg
-published: false
+published: true
 ---
 
 # UNDER REVIEW 
@@ -188,12 +194,13 @@ This project is about creating a sitemap generator able to take as input a webpa
 In this project I will be using no more than these libraries:
 </p>
 
-```python 
-import aiohttp  
+<pre><code>
+import aiohttp 
 import asyncio 
 from bs4 import BeautifulSoup 
 import xml.etree.ElementTree as ET
-```
+</pre></code>
+
 <p>
 Considering how many times _requests_ and _BeautifulSoup_ are imported together, the absence of _requests_ might be striking. 
 The problem with this library is that it is designed to deal with _synchronous_ requests to websites: it sends a 
