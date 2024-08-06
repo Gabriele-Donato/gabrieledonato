@@ -1,7 +1,7 @@
 ---
 layout: default
 title:  "Coding an Asynchronous Sitemap Generator (With Full Code on Github)"
-date:   2024-07-21 10:00:00 +0200
+date:   2024-08-6 10:00:00 +0200
 categories: jekyll update
 excerpt: "This article explores the creation of an asynchronous sitemap generator in Python.
 However, before introducing the tools that will be used, I would like to give a sense of the utility of what has been developed. The first
@@ -18,30 +18,26 @@ published: true
 
 ### writing in progess... this is a draft
 
-<style>
-p {text-align:"justify";}
-</style>
 
-
-<p>
+<p style="text-align: justify">
 This article explores the creation of an asynchronous sitemap generator in Python. The code for this project can be found 
 <a href="https://github.com/Gabriele-Donato/website-materials-/blob/Scraping/Asynchronous_Sitemap_Generator/Asynchronous_Sitemap_Generator.ipynb">here</a>. 
 The first and foremost aim of my work was experimenting with the <i>asyncio</i> library of Python, which I like because it makes non-linear
 programming accessible. 
 </p>
 
-<p>
+<p style="text-align: justify">
 I would also like to discuss the concurrency/parallelism tools available for Python. The reason why I decided to deal with a twofold taks (i.e. presenting an applied project and enter a more general discussion 
 about tools), is not to avoid questions like: <i>why is asynchronous programming better that multithreading or multiprocessing in the present case?</i>, 
 and ultimately of <i>what are asyncio, multithreading and multiprocessing about?</i> While I acknowledge the fact that this is not the classical approach, in my own view it might eliminate some 
 false opinions about the concerned tools, giving a practical context to asynchronous programming, which I believe to be far from obvious.
 </p>
 
-<p>However, before introducing the tools that will be used, I would like to give a sense of the utility of what has been developed. </p>
+<p style="text-align: justify">However, before introducing the tools that will be used, I would like to give a sense of the utility of what has been developed. </p>
 
 <h2> Why this is a boring interesting project</h2>
 
-<p>
+<p style="text-align: justify">
 A "sitemap" is the representation of the structure of a website: a list of unique links starting from a given page (usually the homepage) and proceeding to increasing depths within the structure of the website.
 The depth of a sitemap can be chosen 
 arbitrarily, and ideally should include all of the pages of a website. 
@@ -51,43 +47,43 @@ or whether it is more difficult to reach man-related products than woman-related
 these cases the depth of those pages with respect to the homepage may be an information of crucial value.
 </p>
 
-<p>
+<p style="text-align: justify">
 A good sitemap is also a guide for browsers through what is known as <i>priority</i>: a number that helps indexing the pages depending on the importance given to them by the websmaster. Other useful indications may include the date
 of last modification, and the number of visits that a certain page has received. 
 </p>
 
-<p>
+<p style="text-align: justify">
 Although it may be an element of particular importance, websites may or may not have sitemaps. If the sitemap is not available, and the information is needed,
 scraping is the way to go. However, if the sitemap is available, it should be downloaded from the website since it surely lists what has been deemed important by
 the webmaster. 
 </p>
 
-<p>
+<p style="text-align: justify">
 From a programming perspective, building a sitemap is a project with its own share of fascination and may be accomplished at different levels of expertise: a simple program that collects 
 links from webpages in a synchronous way gets the job done, but it is not scalable, it does not deal with requests overload, it does not question the limits and advantages of the tools
 used, and it does not deal with the minimal formalism to present the results.
 </p>
 
-<p>
+<p style="text-align: justify">
 Nowadays, nobody has to build a sitemap generator, or even a custom scraper: this is fun and instructive, but frameworks like <i>scrapy</i> make the process immediately scalable and 
 professional. Nonetheless, <i>scrapy</i> itself does not work with magic (even though it might look like so given the impressive performances), but using asynchronous programming. 
 The latter will be the core element of the ensuing discussion.
 </p>
 
-<p>
+<p style="text-align: justify">
 At this point, and whenever scraping is involved, I would ask the reader to stop and consider the following question: <i>does it really make sense exploring blindly a whole website?</i> Of course, this is 
 a rhetorical question, since if we knew where to search we would not need a sitemap. In practice, before designing a sraper of whathever type it is useful to check not only for existing sitemaps, but also for 
 APIs (institutional websites generally have them.) Moreover, this is not a trivial question, since tools like <i>scrapy</i> have built-in methods that are so easy to use that might leave small space for a well thought decision.
 </p>
 
-<p>
+<p style="text-align: justify">
 Therefore, even if the project is not as exciting as making a news retriever with real time processing (under construction <a href="https://github.com/Gabriele-Donato/website-materials-/tree/DataEngineering">here</a> by the way),
 this is the place to start to acquaint onelf with the libraries. Let's put our hands to work!
 </p>
 
 <h2>The structure of a Sitemap</h2>
 
-<p>
+<p style="text-align: justify">
 As explained above, sitemaps are a serious thing and a protocol does exist: check <a href="https://www.sitemaps.org/protocol.html">sitemap.org</a>. The following table taken from the website summarizes
 the main tag (note that even when the sitemap is present, most are optional):
 </p>
@@ -125,9 +121,11 @@ the main tag (note that even when the sitemap is present, most are optional):
 	</tr>
 </table>
 
-<p>A sitemap may have at most 50,000 urls and be no more of 50MB, but it is possible to join multiple sitemaps by specifying an index through the <sitemapindex> tag.
+<p style="text-align: justify">
+A sitemap may have at most 50,000 urls and be no more of 50MB, but it is possible to join multiple sitemaps by specifying an index through the <i>sitemapindex</i> tag.
 Moreover, special characters should be escaped and the encoding should be UTF-8. Generally, sitemaps are stored in XML files, and they can be validated through
 schemas (e.g. <a href="http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">here</a>).
+</p>
 
 <p>
 These problems become relevant when storing the scraped data, therefore will appear again only at the end.
@@ -276,19 +274,18 @@ understand the nature of the problem. There are various codes: 200 is "successfu
 </p>
 
 <pre><code>
-async def fetch(self, url):
-	async with self.semaphore:
-       		try:
-               		response = await self.session.get(url, timeout=10)
-                	if response.status == 200:
-                    		content = await response.text()
-                    		return content
-               		else:
-                   		 print(f"Failed to fetch {url} with status {response.status}")
-         	except Exception as e:
-                	print(f"Error fetching {url}: {e}")
-            	return None
-
+    async def fetch(self, url):
+        async with self.semaphore:
+            try:
+                response = await self.session.get(url, timeout=10)
+                if response.status == 200:
+                    content = await response.text()
+                    return content
+                else:
+                    print(f"Failed to fetch {url} with status {response.status}")
+            except Exception as e:
+                print(f"Error fetching {url}: {e}")
+            return None
 </code></pre>
 
 
@@ -302,33 +299,20 @@ A beautiful library for working with urls is <i>urlparse</i>, able to recognise 
 <i>elif</i> where the "https" is added in order to make the url valid.
 </p>
 
-<pre><code>import aiohttp
-import asyncio
-
-class Fetcher:
-    def __init__(self, semaphore_limit=10):
-        self.semaphore = asyncio.Semaphore(semaphore_limit)
-        self.session = aiohttp.ClientSession()
-
-    async def fetch(self, url):
-        async with self.semaphore:
-            try:
-                response = await self.session.get(url, timeout=10)
-                if response.status == 200:
-                    content = await response.text()
-                    return content
-                else:
-                    print(f&quot;Failed to fetch {url} with status {response.status}&quot;)
-            except Exception as e:
-                print(f&quot;Error fetching {url}: {e}&quot;)
+<pre><code>
+    def normalize_url(self, href, current_url):
+        if not href:
             return None
-
-    async def close(self):
-        await self.session.close()
+        parsed_href = urlparse(href)
+        if parsed_href.scheme and parsed_href.netloc:
+            return href if parsed_href.netloc == self.hostname else None
+        elif href.startswith("//"):
+            return f"https:{href}" if self.hostname in href else None
+        return urljoin(current_url, href)
 </code></pre>
 
 
-### Defining the crawler
+<h2>Defining the crawler</h2>
 
 <p>
 The next chunk of code constitutes the core of the scraper and it features for the first time the maybe strange <i>async def</i> syntax. It should be noted that the code is made up of two functions: 1) <i>crawl</i>, that defines the 
@@ -349,7 +333,7 @@ On the other hand, the <i>run</i> function initialises a <i>ClientSession</i> an
 is endowed with keepalive mechanisms that ensure stable connection between client and server, and manages requests intelligently avoiding to send multiple times the same request.
 </p>
 
-```python 
+<pre><code>
    async def crawl(self, url, level):
         if level > self.max_depth:
             return
@@ -372,16 +356,16 @@ is endowed with keepalive mechanisms that ensure stable connection between clien
         async with aiohttp.ClientSession() as self.session:
             await self.crawl(self.root, 0)
             self.generate_file()
-```
+</pre></code>
 
-### Storing the links
+<h2>Storing the links</h2>
 
 <p>
 As explained above, there exist a general codification for storing sitemaps in XML files. These files can be read by pandas in the same way as a .csv or .xlsx sheet. Therefore all the urls are stored as children of the <i>urlset</i>
 tag within a <i>loc</i> tag inside of a <i>url</i> tag. The latter also contains the priority measure rounded to two decimals and decreasing with the level (this is optional and just to show how it works.)
 </p>
 
-```python 
+<pre><code>
   def generate_file(self):
         urlsbylevel = {}
         for url, level in self.urls.items():
@@ -403,8 +387,8 @@ tag within a <i>loc</i> tag inside of a <i>url</i> tag. The latter also contains
         tree = ET.ElementTree(root)
         tree.write(self.filename, encoding="utf-8", xml_declaration=True)
         print(f"Sitemap saved to '{self.filename}'.")
-```
+</pre></code>
 
 
 
-[^1]: For instance, once I scraped the European Parliament website for retrieving the contributions of the partisans during plenary sessions. If I had to scrape the whole website I would never have accomplished the task.
+
