@@ -1,7 +1,7 @@
 ---
 layout: default
 title:  "Coding an Asynchronous Sitemap Generator (With Full Code on Github)"
-date:   2024-08-6 10:00:00 +0200
+date:   2024-08-06 10:00:00 +0200
 categories: jekyll update
 excerpt: "This article explores the creation of an asynchronous sitemap generator in Python.
 However, before introducing the tools that will be used, I would like to give a sense of the utility of what has been developed. The first
@@ -356,7 +356,7 @@ is endowed with keepalive mechanisms that ensure stable connection between clien
         async with aiohttp.ClientSession() as self.session:
             await self.crawl(self.root, 0)
             self.generate_file()
-</pre></code>
+</code></pre>
 
 <h2>Storing the links</h2>
 
