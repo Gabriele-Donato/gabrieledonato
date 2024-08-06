@@ -125,11 +125,9 @@ the main tag (note that even when the sitemap is present, most are optional):
 	</tr>
 </table>
 
-<p>
-A sitemap may have at most 50,000 urls and be no more of 50MB, but it is possible to join multiple sitemaps by specifying an index through the <sitemapindex> tag.
+<p>A sitemap may have at most 50,000 urls and be no more of 50MB, but it is possible to join multiple sitemaps by specifying an index through the <sitemapindex> tag.
 Moreover, special characters should be escaped and the encoding should be UTF-8. Generally, sitemaps are stored in XML files, and they can be validated through
 schemas (e.g. <a href="http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">here</a>).
-</p>
 
 <p>
 These problems become relevant when storing the scraped data, therefore will appear again only at the end.
@@ -190,17 +188,17 @@ less efficient of an equivalent program that performs the same task in a single 
 </p>
 
 <p>
-However, before proceeding with asynchronous programming, it might be helpful to clarify a certain idea, false and widely spread, about Python and multithreading.
+A widespread idea about multithreading in Python is that its <i>threading</i> module does not support multithreading because of the Global Interpreter Lock (GIL.) This is a false statement: what the GIL 
+does is just preventing parallel execution of multiple threads in the same process, exactly as explained above. When executing I/O tasks the lock gets released, therefore the program written using the library 
+is indeed a multithreaded program, it suffices be mindful of the operations that are being carried out. It is possible to bypass the GIL using the <i>multiprocessing</i> module, or building extensions in C. 
 </p>
-
-
-## Mythbusting
 
 ## How is asynchronicity achieved?
 
-This is an interesting topic that I plan to explain more deeply very soon in this paragraph.
+This is an interesting topic that I plan to explain more deeply very soon in this paragraph. 
 
-## Project 
+<h2>The project</h2>
+
 <p>
 This project is about creating a sitemap generator able to take as input a webpage and return an XML file including the links up to the _nth_ page.
 In this project I will be using no more than these libraries:
@@ -227,7 +225,8 @@ advance more steadily in coding, and that I cannot but consider the correct and 
 <p>
 I will give for granted that the reader knows the syntax of asyncio. YouTube is full of valuable materials, I list some that I found useful in the references section.
 </p>
-### A worker called SitemapGenerator
+
+<h2>A worker called SitemapGenerator</h2>
 <p>
 I would like my scraper to take an input, a webpage, and store it into a file (for the moment I want to name the file a priori, but I might as well extract the name of the website from the webpage.)
 Moreover,I would like to be able to control the maximum reachable depth: my webpage is level 0, the links I can reach directly from there are level 1, the links I can reach from level 1 are level 2 with respect to the starting page etc...
@@ -247,19 +246,20 @@ efficiency of the code through, for instance, connection pooling (if more reques
 All of the above results can be embedded in a worker called SitemapGenerator (for the moment the session is simply initialised to None.)
 </p>
 
-```python 
+<pre><code>
 class SitemapGenerator:
     def __init__(self, root, filename, max_tasks=10, max_depth=3):
-        self.filename = filename
-        self.urls = {}
-        self.root = root
-        self.hostname = urlparse(root).hostname
-        self.semaphore = asyncio.Semaphore(max_tasks)
-        self.max_depth = max_depth
-        self.session = None
-```
+       self.filename = filename
+       self.urls = {}
+       self.root = root
+       self.hostname = urlparse(root).hostname
+       self.semaphore = asyncio.Semaphore(max_tasks)
+       self.max_depth = max_depth
+       self.session = None
+</code></pre>
 
-### Defining plow and hoe
+<h2>Defining Plow and Hoe</h2>
+
 <p>
 One lesson that I have learned from scraping is that inefficiency can be more productive than efficiency sometimes. 
 A webscraper that retrieves 100k links in three seconds, but leaves you hopless and banned from the scraped resource, is 
@@ -275,8 +275,42 @@ The response.status is just a number that indicates whether the page could be re
 understand the nature of the problem. There are various codes: 200 is "successful response." To know more about response codes visit <a href="https://it.wikipedia.org/wiki/Codici_di_stato_HTTP">here</a>.
 </p>
 
-```python 
-  async def fetch(self, url):
+<pre><code>
+async def fetch(self, url):
+	async with self.semaphore:
+       		try:
+               		response = await self.session.get(url, timeout=10)
+                	if response.status == 200:
+                    		content = await response.text()
+                    		return content
+               		else:
+                   		 print(f"Failed to fetch {url} with status {response.status}")
+         	except Exception as e:
+                	print(f"Error fetching {url}: {e}")
+            	return None
+
+</code></pre>
+
+
+<p>
+Now that the scraper knows how to behave when fetching a page, it should be instructed on what pages to fetch out of all the pages on the internet. This is not enough, it should be able, given an url, maybe 
+written in an incorrect or incomplete way, to use its knowledge of the hostname from which it started to reconstruct the correct one.
+</p>
+
+<p>
+A beautiful library for working with urls is <i>urlparse</i>, able to recognise and intelligently join url parts. In particular, the "normalization" involved in the below function refers only to the last 
+<i>elif</i> where the "https" is added in order to make the url valid.
+</p>
+
+<pre><code>import aiohttp
+import asyncio
+
+class Fetcher:
+    def __init__(self, semaphore_limit=10):
+        self.semaphore = asyncio.Semaphore(semaphore_limit)
+        self.session = aiohttp.ClientSession()
+
+    async def fetch(self, url):
         async with self.semaphore:
             try:
                 response = await self.session.get(url, timeout=10)
@@ -284,31 +318,15 @@ understand the nature of the problem. There are various codes: 200 is "successfu
                     content = await response.text()
                     return content
                 else:
-                    print(f"Failed to fetch {url} with status {response.status}")
+                    print(f&quot;Failed to fetch {url} with status {response.status}&quot;)
             except Exception as e:
-                print(f"Error fetching {url}: {e}")
+                print(f&quot;Error fetching {url}: {e}&quot;)
             return None
-```
-<p>
-Now that the scraper knows how to behave when fetching a page, it should be instructed on what pages to fetch out of all the pages on the internet. This is not enough, it should be able, given an url, maybe 
-written in an incorrect or incomplete way, to use its knowledge of the hostname from which it started to reconstruct the correct one.
-</p>
-<p>
-A beautiful library for working with urls is <i>urlparse</i>, able to recognise and intelligently join url parts. In particular, the "normalization" involved in the below function refers only to the last 
-<i>elif</i> where the "https" is added in order to make the url valid.
-</p>
 
-```python 
- def normalize_url(self, href, current_url):
-        if not href:
-            return None
-        parsed_href = urlparse(href)
-        if parsed_href.scheme and parsed_href.netloc:
-            return href if parsed_href.netloc == self.hostname else None
-        elif href.startswith("//"):
-            return f"https:{href}" if self.hostname in href else None
-        return urljoin(current_url, href)
-```
+    async def close(self):
+        await self.session.close()
+</code></pre>
+
 
 ### Defining the crawler
 
