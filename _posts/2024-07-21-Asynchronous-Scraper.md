@@ -18,26 +18,31 @@ published: true
 
 ### writing in progess... this is a draft
 
+<style>
+p{
+text-align: justify;
+}
+</style>
 
-<p style="text-align: justify">
+<p>
 This article explores the creation of an asynchronous sitemap generator in Python. The code for this project can be found 
 <a href="https://github.com/Gabriele-Donato/website-materials-/blob/Scraping/Asynchronous_Sitemap_Generator/Asynchronous_Sitemap_Generator.ipynb">here</a>. 
 The first and foremost aim of my work was experimenting with the <i>asyncio</i> library of Python, which I like because it makes non-linear
 programming accessible. 
 </p>
 
-<p style="text-align: justify">
+<p>
 I would also like to discuss the concurrency/parallelism tools available for Python. The reason why I decided to deal with a twofold taks (i.e. presenting an applied project and enter a more general discussion 
 about tools), is not to avoid questions like: <i>why is asynchronous programming better that multithreading or multiprocessing in the present case?</i>, 
 and ultimately of <i>what are asyncio, multithreading and multiprocessing about?</i> While I acknowledge the fact that this is not the classical approach, in my own view it might eliminate some 
 false opinions about the concerned tools, giving a practical context to asynchronous programming, which I believe to be far from obvious.
 </p>
 
-<p style="text-align: justify">However, before introducing the tools that will be used, I would like to give a sense of the utility of what has been developed. </p>
+<p>However, before introducing the tools that will be used, I would like to give a sense of the utility of what has been developed. </p>
 
 <h2> Why this is a boring interesting project</h2>
 
-<p style="text-align: justify">
+<p>
 A "sitemap" is the representation of the structure of a website: a list of unique links starting from a given page (usually the homepage) and proceeding to increasing depths within the structure of the website.
 The depth of a sitemap can be chosen 
 arbitrarily, and ideally should include all of the pages of a website. 
@@ -47,43 +52,43 @@ or whether it is more difficult to reach man-related products than woman-related
 these cases the depth of those pages with respect to the homepage may be an information of crucial value.
 </p>
 
-<p style="text-align: justify">
+<p>
 A good sitemap is also a guide for browsers through what is known as <i>priority</i>: a number that helps indexing the pages depending on the importance given to them by the websmaster. Other useful indications may include the date
 of last modification, and the number of visits that a certain page has received. 
 </p>
 
-<p style="text-align: justify">
+<p>
 Although it may be an element of particular importance, websites may or may not have sitemaps. If the sitemap is not available, and the information is needed,
 scraping is the way to go. However, if the sitemap is available, it should be downloaded from the website since it surely lists what has been deemed important by
 the webmaster. 
 </p>
 
-<p style="text-align: justify">
+<p>
 From a programming perspective, building a sitemap is a project with its own share of fascination and may be accomplished at different levels of expertise: a simple program that collects 
 links from webpages in a synchronous way gets the job done, but it is not scalable, it does not deal with requests overload, it does not question the limits and advantages of the tools
 used, and it does not deal with the minimal formalism to present the results.
 </p>
 
-<p style="text-align: justify">
+<p>
 Nowadays, nobody has to build a sitemap generator, or even a custom scraper: this is fun and instructive, but frameworks like <i>scrapy</i> make the process immediately scalable and 
 professional. Nonetheless, <i>scrapy</i> itself does not work with magic (even though it might look like so given the impressive performances), but using asynchronous programming. 
 The latter will be the core element of the ensuing discussion.
 </p>
 
-<p style="text-align: justify">
+<p>
 At this point, and whenever scraping is involved, I would ask the reader to stop and consider the following question: <i>does it really make sense exploring blindly a whole website?</i> Of course, this is 
 a rhetorical question, since if we knew where to search we would not need a sitemap. In practice, before designing a sraper of whathever type it is useful to check not only for existing sitemaps, but also for 
 APIs (institutional websites generally have them.) Moreover, this is not a trivial question, since tools like <i>scrapy</i> have built-in methods that are so easy to use that might leave small space for a well thought decision.
 </p>
 
-<p style="text-align: justify">
+<p>
 Therefore, even if the project is not as exciting as making a news retriever with real time processing (under construction <a href="https://github.com/Gabriele-Donato/website-materials-/tree/DataEngineering">here</a> by the way),
 this is the place to start to acquaint onelf with the libraries. Let's put our hands to work!
 </p>
 
 <h2>The structure of a Sitemap</h2>
 
-<p style="text-align: justify">
+<p>
 As explained above, sitemaps are a serious thing and a protocol does exist: check <a href="https://www.sitemaps.org/protocol.html">sitemap.org</a>. The following table taken from the website summarizes
 the main tag (note that even when the sitemap is present, most are optional):
 </p>
@@ -121,7 +126,7 @@ the main tag (note that even when the sitemap is present, most are optional):
 	</tr>
 </table>
 
-<p style="text-align: justify">
+<p>
 A sitemap may have at most 50,000 urls and be no more of 50MB, but it is possible to join multiple sitemaps by specifying an index through the <i>sitemapindex</i> tag.
 Moreover, special characters should be escaped and the encoding should be UTF-8. Generally, sitemaps are stored in XML files, and they can be validated through
 schemas (e.g. <a href="http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">here</a>).
