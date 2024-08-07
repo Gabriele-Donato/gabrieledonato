@@ -37,10 +37,10 @@ gem "github-pages", "~> 207", group: :jekyll_plugins
 gem "webrick", "~> 1.7"
 gem "kramdown-parser-gfm"
 # Additional plugins
-gem "jekyll-feed", "~> 0.12"
 gem "jekyll-sitemap", "~> 1.4"
 
 group :jekyll_plugins do
   gem "jekyll-seo-tag"
 end
+
 
