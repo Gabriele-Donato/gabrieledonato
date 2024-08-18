@@ -99,6 +99,15 @@ image: /assets/images/rambosson.jpg
             max-width: 100%;
             height: auto;
         }
+	.table-container {
+    display: flex;
+    justify-content: center;
+    }
+
+     .table-container table {
+    margin: auto;
+	}
+
 	
     </style>
 </head>
@@ -333,8 +342,8 @@ with the raw data.</p>
 <p>In order to apply the model, the outcome tuples defined above have 
 been encoded using cardinal numbers as shown in the table below.</p>
 
-
-<table style="display:block;margin:auto;">
+<div class="table-container">
+<table>
 <tr>
 <th>Outcome (Russia, Ukraine)</th>
 <th>Encoding</th>
@@ -356,6 +365,7 @@ been encoded using cardinal numbers as shown in the table below.</p>
 <td>3</td>
 </tr>
 </table>
+</div>
 
 
 <p>The first state (index <span class="math inline">\(1\)</span>) represents
