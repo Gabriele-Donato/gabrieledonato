@@ -110,7 +110,7 @@ produced the observations with the highest probability. This justifies
 the position of the code in the time-series repository on GitHub.</p>
 <p>The model is both intuitive and powerful, two characteristics that
 make it interpretable and suited in decision-making situations.</p>
-<p><strong>The Forward-Back Algorithm</strong></p>
+<h2><strong>The Forward-Back Algorithm</strong></h2>
 <p>In order to fit the model, it is necessary to use an algorithm called
 “Forward-Back”, or “Baum-Welch.” Given a time series of observations,
 the idea of the algorithm is that of moving forward in time predicting
@@ -145,7 +145,7 @@ causality.</p>
 <p>What remains to be clarified is the meaning of the asymmetry between
 the forward and backward steps, and how this is interpreted in a
 quantitative way.</p>
-<p><strong>The forward pass</strong></p>
+<h2><strong>The forward pass</strong></h2>
 <p>Given a set of possible latent states <span class="math inline">\(s
 \in S\)</span> , let’s define a set of <em>paths</em> <span
 class="math inline">\(p \in P\)</span> that describes how the system can
@@ -183,7 +183,7 @@ class="math inline">\(t - 1\)</span>, when time <span
 class="math inline">\(t\)</span> gets estimated and the process stops.
 Put it differently, after the initialization there is always a future to
 be estimated.</p>
-<p><strong>The backward pass</strong></p>
+<h2><strong>The backward pass</strong></h2>
 <p>The same concepts apply to the backward pass:</p>
 <p><span class="math display">\[p(x_{T:1},u_{T}^{s}) = \sum_{p \in
 P}p(x_{T}|u_{T}^{s})p(u_{T}|u_{T - 1})p(x_{T - 1:1},u_{T - 1}^{s})
@@ -213,7 +213,7 @@ the other hand, in the backward part, the hidden state of the last
 observation is determined solely by the emission and transition
 probabilities, and no assumption about <span class="math inline">\(T +
 1\)</span>.</p>
-<p><strong>Matrix notation</strong></p>
+<h2><strong>Matrix notation</strong></h2>
 <p>In order to apply the model, it is possible to store the probability
 in matrix values. Assuming that there are two states and <span
 class="math inline">\(n\)</span> observations, <span
@@ -261,7 +261,7 @@ p_{21} &amp; p_{22}
 e_{11} &amp; e_{12} &amp; e_{13} \\
 e_{21} &amp; e_{22} &amp; e_{23}
 \end{bmatrix}\]</span></p>
-<p><strong>Mea Culpa</strong></p>
+<h2><strong>How it all started</strong></h2>
 <p>The model has been applied to a time series of articles scraped from
 the <em>Institute for the Study of War</em> (ISW.) Originally, the
 scraping project was born to showcase a data engineering pipeline, which
@@ -319,7 +319,7 @@ period of relative peace, or the start of a heated phase of the war. It
 should be useful to express this uncertainty in probability
 language.</p>
 <p><mark></mark></p>
-<p><strong>Mining meaningful patterns from text</strong></p>
+<h2><strong>Mining patterns from text</strong></h2>
 <p>The first obstacle is to mine patterns from the text articles. In
 particular, the interest lies in classifying the news in two bins
 depending on whether they report one or more attacks from Russia or
@@ -327,7 +327,7 @@ Ukraine.</p>
 <p>It is possible to do that through the Python library <em>SpaCy.</em>
 The library allows for the definition of general patterns to be matched
 with the raw data.</p>
-<p><strong>Model application</strong></p>
+<h2><strong>Model application</strong></h2>
 <p>In order to apply the model, the outcome tuples defined above have 
 been encoded using cardinal numbers as shown in the table below.</p>
 <div style="align: center;">
@@ -384,6 +384,8 @@ attacks are observed.</p>
 <h3>Here the results! </h3>
 
 <p style="text-align:center"><mark></mark><img src="{{ '/assets/images/post_images/hidden_markov_model/RussoUkraineWar_Hmm.png' | relative_url }}"
+
+<h2><strong>References</strong></h2>
 
 </body>
 </html>
