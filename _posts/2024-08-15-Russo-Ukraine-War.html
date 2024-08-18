@@ -323,11 +323,51 @@ language.</p>
 <h2><strong>Mining patterns from text</strong></h2>
 <p>The first obstacle is to mine patterns from the text articles. In
 particular, the interest lies in classifying the news in two bins
-depending on whether they report one or more attacks from Russia or
-Ukraine.</p>
-<p>It is possible to do that through the Python library <em>SpaCy.</em>
-The library allows for the definition of general patterns to be matched
-with the raw data.</p>
+depending on whether they report attacks from Russia, 
+Ukraine or both.</p>
+<p>It is possible to greatly simplify the task through the Python library <em>SpaCy</em> which allows for 
+the definition of general patterns to be matched with the raw data.</p>
+<p>In the present case, two patterns have been defined: one for Russia and one for Ukraine. The syntax 
+is straightforward, let's consider Russia: for the news to be classified as dealing with Russian attacks, 
+it is required that the word "russia" or "russian" should be followed by one in the list of "military",
+"troops" etc.. However, in this case the word are not limited to those specified in the list, but
+include "lemmas" that have a similar meaning. The same holds for the verb list at the end.</p>
+<pre>
+<code>
+russian_attack_matcher = Matcher(nlp.vocab)
+ukraine_attack_matcher = Matcher(nlp.vocab)
+
+russian_attack = [
+    {'LOWER': {'IN':['russia', 'russian']}},
+    {'LEMMA': {'IN':['military', 'force', 'army', 'troops', 'missile']}},
+    {'LEMMA': {'IN':['attack', 'strike', 'damage', 'destroy', 'kill', 'cut']}},   
+]
+
+
+ukraine_attack = [
+        {'LOWER': {'IN':['ukraine', 'ukranian']}},
+        {'LEMMA': {'IN':['attack', 'strike', 'damage', 'destroy', 'kill', 'cut']}},   
+]
+
+
+russian_attack_matcher.add('RussianAttack', patterns=[russian_attack])
+ukraine_attack_matcher.add('UkraineAttack', patterns=[ukraine_attack])
+</code>
+</pre>
+<p>To be sure, I limited the present application to the simplest possible case. For instance, words such as "offensive" and 
+noun phrases such as "the ongoing russian counteroffensive" are not considered. It is possible to address these 
+flaws in a flexible way throug the same method (as can be seen, the matcher accepts a list of patterns.)</p>
+<p>The analysis can be refined even further thanks to the tools offered by this library: once the 
+articles matching with the pattern have been found, it is possible to analyse the logical structure
+of the sentences and check whether e.g. Russia is a subject or object, and what are the verbs connected 
+to it.</p>
+<p>It would even be possible to use embeddings, i.e. a sentence vectorization that 
+represents the meaning of the sentences, and use the numerical features to
+understand what the articles are talking about with a higher understanding of 
+the nuances. Finally, proper names can be retrieved using NER (named entity recognition), 
+allowing for geospatial/subject-level analysis.</p>
+
+
 <h2><strong>Model application</strong></h2>
 <p>In order to apply the model, the outcome tuples defined above have 
 been encoded using cardinal numbers as shown in the table below.</p>
@@ -395,6 +435,6 @@ attacks are observed.</p>
 <p>The following website provides a similar explanation of the algorithm. However, the present post provides a clearer and leaner tractation, and an original application to dichotomic data:</p>
 <p>Jana, A. (2019). <i>Forward and Backward Algorithm in Hidden Markov Model</i>. Available at: <a>https://adeveloperdiary.com/data-science/machine-learning/forward-and-backward-algorithm-in-hidden-markov-model/</a></p>
 <p>For additional materials, make sure to check out my notebook, where the code is made fully available.</p>
-
+<p>This is a very interesting project since it allows me to showcase a broad range of skills and therefore I am planning to go deeper into it in the near future.</p>
 </body>
 </html>
