@@ -330,22 +330,24 @@ the definition of general patterns to be matched with the raw data.</p>
 <p>In the present case, two patterns have been defined: one for Russia and one for Ukraine. The syntax 
 is straightforward, let's consider Russia: for the news to be classified as dealing with Russian attacks, 
 it is required that the word "russia" or "russian" should be followed by one in the list of "military",
-"troops" etc.. However, in this case the word are not limited to those specified in the list, but
-include "lemmas" that have a similar meaning. The same holds for the verb list at the end.</p>
+"troops" etc.. Moreover, the word Russia should be the subject of the sentence (and "Russian" the modifier of a noun
+that serves as a subject.) The lists called "LEMMA" are not closed, and all the words that belong to the 
+same lemma of any of them is included.</p>
 <pre>
 <code>
 russian_attack_matcher = Matcher(nlp.vocab)
 ukraine_attack_matcher = Matcher(nlp.vocab)
 
 russian_attack = [
-    {'LOWER': {'IN':['russia', 'russian']}},
+    {'LOWER': {'IN': ['russia', 'russian']}, 'DEP': {'IN': ['nsubj', 'amod']}},
     {'LEMMA': {'IN':['military', 'force', 'army', 'troops', 'missile']}},
     {'LEMMA': {'IN':['attack', 'strike', 'damage', 'destroy', 'kill', 'cut']}},   
 ]
 
 
 ukraine_attack = [
-        {'LOWER': {'IN':['ukraine', 'ukranian']}},
+        {'LOWER': {'IN': ['ukraine', 'ukrainian']}, 'DEP': {'IN': ['nsubj', 'amod']}},
+        {'LEMMA': {'IN':['military', 'force', 'army', 'troops', 'missile']}},
         {'LEMMA': {'IN':['attack', 'strike', 'damage', 'destroy', 'kill', 'cut']}},   
 ]
 
