@@ -340,14 +340,14 @@ ukraine_attack_matcher = Matcher(nlp.vocab)
 
 russian_attack = [
     {'LOWER': {'IN': ['russia', 'russian']}, 'DEP': {'IN': ['nsubj', 'amod']}},
-    {'LEMMA': {'IN':['military', 'force', 'army', 'troops', 'missile']}},
+    {'LEMMA': {'IN': ['military', 'force', 'army', 'troops', 'missile']}, 'DEP': 'nsubj'},
     {'LEMMA': {'IN':['attack', 'strike', 'damage', 'destroy', 'kill', 'cut']}},   
 ]
 
 
 ukraine_attack = [
         {'LOWER': {'IN': ['ukraine', 'ukrainian']}, 'DEP': {'IN': ['nsubj', 'amod']}},
-        {'LEMMA': {'IN':['military', 'force', 'army', 'troops', 'missile']}},
+        {'LEMMA': {'IN': ['military', 'force', 'army', 'troops', 'missile']}, 'DEP': 'nsubj'},
         {'LEMMA': {'IN':['attack', 'strike', 'damage', 'destroy', 'kill', 'cut']}},   
 ]
 
