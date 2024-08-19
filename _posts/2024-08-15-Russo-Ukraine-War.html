@@ -356,14 +356,10 @@ russian_attack_matcher.add('RussianAttack', patterns=[russian_attack])
 ukraine_attack_matcher.add('UkraineAttack', patterns=[ukraine_attack])
 </code>
 </pre>
-<p>To be sure, I limited the present application to the simplest possible case. For instance, words such as "offensive" and 
+<p>I have limited the present application to the simplest possible case. For instance, words such as "offensive" and 
 noun phrases such as "the ongoing russian counteroffensive" are not considered. It is possible to address these 
-flaws in a flexible way throug the same method (as can be seen, the matcher accepts a list of patterns.)</p>
-<p>The analysis can be refined even further thanks to the tools offered by this library: once the 
-articles matching with the pattern have been found, it is possible to analyse the logical structure
-of the sentences and check whether e.g. Russia is a subject or object, and what are the verbs connected 
-to it.</p>
-<p>It would even be possible to use embeddings, i.e. a sentence vectorization that 
+flaws in a flexible way throug the same method (as can be seen, the matcher accepts a list of patterns.)
+It would even be possible to use embeddings, i.e. a sentence vectorization that 
 represents the meaning of the sentences, and use the numerical features to
 understand what the articles are talking about with a higher understanding of 
 the nuances. Finally, proper names can be retrieved using NER (named entity recognition), 
