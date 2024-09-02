@@ -1,7 +1,7 @@
 ---
 layout: default
 title: "When Enough is Enough: A Study of Retaliatory Patterns in the Russo-Ukraine War Using a Hidden Markov Model"
-date:   2024-08-15 10:00:00 +0200
+date:   2024-08-17 10:00:00 +0200
 categories: jekyll update
 excerpt: "Hidden Markov Models identify a class of models used for estimating
 the latent states of time-series data. At the end of the estimation
@@ -331,8 +331,8 @@ the definition of general patterns to be matched with the raw data.</p>
 is straightforward, let's consider Russia: for the news to be classified as dealing with Russian attacks, 
 it is required that the word "russia" or "russian" should be followed by one in the list of "military",
 "troops" etc.. Moreover, the word Russia should be the subject of the sentence (and "Russian" the modifier of a noun
-that serves as a subject.) The lists called "LEMMA" are not closed, and all the words that belong to the 
-same lemma of any of them is included.</p>
+that serves as a subject.) The lists called "LEMMA" are not closed:
+all the words belonging to the same lemma of any one of the elements of the list are included.</p>
 <pre>
 <code>
 russian_attack_matcher = Matcher(nlp.vocab)
