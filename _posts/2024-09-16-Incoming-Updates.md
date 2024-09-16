@@ -1,6 +1,6 @@
 ---
 layout: default
-title:  "Coding an Asynchronous Sitemap Generator (With Full Code on Github)"
+title:  "Incoming Updates Provisional Note"
 date:   2024-09-16 10:00:00 +0200
 categories: jekyll update
 excerpt: "notice of next updates"
