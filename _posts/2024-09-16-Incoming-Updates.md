@@ -1,7 +1,7 @@
 ---
 layout: default
 title:  "Coding an Asynchronous Sitemap Generator (With Full Code on Github)"
-date:   2024-08-06 10:00:00 +0200
+date:   2024-09-16 10:00:00 +0200
 categories: jekyll update
 excerpt: "notice of next updates"
 image: /assets/images/rambosson.jpg
